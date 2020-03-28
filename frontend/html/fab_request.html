@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>$(TITLE)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- TODO: figure out how to add header padding -->
+<div class="container">
+  <div class="row row-bordered">
+    <div class="col-sm-4">
+      <h2><a href="index.html">$(TITLE)</a></h2>
+    </div>
+    <div class="col-sm-3 text-left">
+      <h2><a href="register.html">Register</a></h2>
+    </div>
+    <div class="col-sm-5 text-right">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-4 text-left">
+            <label>Email</label>
+          </div>
+          <div class="col-sm-4 text-left">
+            <label>Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5 text-left">
+            <input name="" class="form-control" placeholder="user@domain.com" type="email">
+          </div>
+          <div class="col-sm-4 text-left">
+            <input name="" class="form-control" placeholder="******" type="password">
+            <a class="float-right" href="#">Forgot?</a>
+          </div>
+          <div class="col-sm-3 text-right">
+            <button type="button" class="mt-auto btn btn-block btn-primary">Log in</button>
+          </div>
+        </div>
+      </div> <!-- row.// -->
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row text-center">
+    <!-- Description
+    Measurements (if applicable)
+    i.e. if it needs to interface with an existing device
+    Date needed by (YYYY-MM-DD)
+    Pictures
+    Hashtags
+    -->
+    <h3>Make a fabrication request</h3>
+  </div>
+  <form action="#blah">
+    <div class="form-group">
+      <div class="row text-left">
+        <label for="comment">Link to design</label>
+        <input id="design" class="form-control" type="text"></textarea>
+      </div>
+      
+      <div class="row text-left">
+        <!-- space separate keywords -->
+        <label for="comment">Keywords</label>
+        <input name="" class="form-control" placeholder="urgent, disposable, etc" type="email">
+      </div>
+      <div class="row text-left">
+        <label for="example-date-input">Date needed by</label>
+        <div class="text-center">
+          <input class="form-control" type="date" placeholder="MMMM-DD-YY" id="example-date-input">
+        </div>
+      </div>
+      <br>
+      <div class="row text-left">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div> <!--container end.//-->
+
+
+</body>
+</html>
