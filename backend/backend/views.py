@@ -64,7 +64,8 @@ def browse_prints_view(req: Request):
                 'files': post.get_files()
             })
 
-    return {'user_name': req.session['uname'], 'page': 'browse_prints', 'prints_display': prints}
+    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_prints',
+            'prints_display': prints}
 
 
 # This snippet is for viewing a particular print, I wrote it in the wrong location, so I'm leaving it here for later
