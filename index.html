@@ -38,6 +38,7 @@
             <label>Password</label>
               <input name="" class="form-control" placeholder="******" type="password">
           </div>
+          <!-- TODO: Fix wonky placement of login button -->
           <div class="col-sm-2 text-center">
             <button type="submit" class="btn btn-primary btn-block"> Login  </button>
           </div>
@@ -52,7 +53,7 @@
   <div class="row">
     <div class="col-sm-6 text-justify">
       <h3>About $(TITLE)</h3>
-      <h4>$(TITLE) provides a platform for Designers and Fabricators to make life-saving medical equipment to support professionals in the healthcare industry and individual consumers.</h4>
+      <h4>$(TITLE) provides a platform for Designers and Fabricators to make life saving medical equipment to support healthcare professionals and individual consumers.</h4>
       <h4>Hospitals/Healthcare Professionals/Consumers</h4>
       <div class="col-sm-12">
         <p>Make requests for custom medical equipment.</p>
@@ -66,10 +67,8 @@
         <p>Use your experience and fabrication tools to make life-saving medical equipment.</p>
       </div>
     </div>
-    <div class="container">
 
-    <div class="row">
-      <aside class="col-sm-6">
+    <div class="col-sm-5 col-md-offset-1">
     <div class="card">
     <article class="card-body">
     <h3 class="card-title mb-4 mt-1">Sign up</h3>
@@ -87,6 +86,22 @@
         <div class="form-group">
           <input name="" class="form-control" placeholder="Email" type="email">
         </div> <!-- form-group// -->
+        <div class="form-group">
+          <!-- TODO: add date of birth validation/make these drop downs -->
+          <label>Date of Birth</label>
+          <div class="row">
+            <div class="col-md-4">
+              <input name="" class="form-control" placeholder="Month" type="text">
+            </div>
+            <div class="col-md-4">
+              <input name="" class="form-control" placeholder="Day" type="text">
+            </div>
+            <div class="col-md-4">
+              <input name="" class="form-control" placeholder="Year" type="text">
+            </div>
+          </div>
+        </div>
+        
         <div class="form-group">
           <label>Account type</label>
           <br>
@@ -111,6 +126,7 @@
             </div>
           </div>
         </div>
+        <!-- TODO: add validation of password to meet minimum requirements -->
         <div class="form-group">
           <label>Your password</label>
             <input class="form-control" placeholder="******" type="password">
@@ -122,17 +138,12 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block"> Sign up  </button>
         </div> <!-- form-group// -->                                                           
-      </form>
+      </form> <!-- form// -->
     </article>
     </div> <!-- card.// -->
-      </aside> <!-- col.// -->
-    </div> <!-- row.// -->
-
-</div> 
-<!--container end.//-->
-    </div>
-  </div>
-</div>
+    </div> <!-- col.// -->
+  </div>  <!-- row.// -->
+</div> <!--container end.//-->
 
 
 
