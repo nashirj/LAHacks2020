@@ -11,39 +11,39 @@
 </head>
 <body>
 
-<!-- <div class="jumbotron text-center">
-  
-  <p>sldjkf</p> 
-</div>
- -->
-
-<!-- a page takes up 12 units, use columns accordingly -->
+<!-- TODO: figure out how to add header padding -->
 <div class="container">
   <div class="row row-bordered">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <h2><a href="/index.html">$(TITLE)</a></h2>
     </div>
-    <div class="col-sm-3 text-center">
-      <h2><a href="frontend/html/desings.html">Designs</a></h2>
+    <div class="col-sm-3 text-left">
+      <h2><a href="frontend/html/designs.html">Designs</a></h2>
     </div>
-    <div class="col-sm-6 text-right">
-      <div class="row">
-        <div class="form-group">
+    <div class="col-sm-5 text-right">
+      <div class="form-group">
+        <div class="row">
           <div class="col-sm-4 text-left">
             <label>Email</label>
-              <input name="" class="form-control" placeholder="user@domain.com" type="email">
+          </div>
+          <div class="col-sm-4 text-left">
+            <label>Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5 text-left">
+            <input name="" class="form-control" placeholder="user@domain.com" type="email">
           </div>
           <!-- TODO: hide password input: https://codepen.io/Qanser/pen/dVRGJv -->
           <div class="col-sm-4 text-left">
-            <label>Password</label>
-              <input name="" class="form-control" placeholder="******" type="password">
+            <input name="" class="form-control" placeholder="******" type="password">
+            <a class="float-right" href="#">Forgot?</a>
           </div>
-          <!-- TODO: Fix wonky placement of login button -->
-          <div class="col-sm-2 text-center">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          <div class="col-sm-3 text-right">
+            <button type="button" class="mt-auto btn btn-block btn-primary">Log in</button>
           </div>
-        </div> <!-- form-group// -->
-      </div>
+        </div>
+      </div> <!-- row.// -->
     </div>
   </div>
 </div>
@@ -90,8 +90,6 @@
         <div class="form-group">
           <label>Your password</label>
             <input class="form-control" placeholder="******" type="password">
-
-          <a class="float-right" href="#">Forgot?</a>
         </div> <!-- form-group// --> 
         <div class="form-group"> 
         </div> <!-- form-group// -->  

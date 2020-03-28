@@ -11,39 +11,39 @@
 </head>
 <body>
 
-<!-- <div class="jumbotron text-center">
-  
-  <p>sldjkf</p> 
-</div>
- -->
-
-<!-- a page takes up 12 units, use columns accordingly -->
+<!-- TODO: figure out how to add header padding -->
 <div class="container">
   <div class="row row-bordered">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <h2><a href="/index.html">$(TITLE)</a></h2>
     </div>
-    <div class="col-sm-3 text-center">
-      <h2><a href="frontend/html/desings.html">Designs</a></h2>
+    <div class="col-sm-3 text-left">
+      <h2><a href="frontend/html/designs.html">Designs</a></h2>
     </div>
-    <div class="col-sm-6 text-right">
-      <div class="row">
-        <div class="form-group">
+    <div class="col-sm-5 text-right">
+      <div class="form-group">
+        <div class="row">
           <div class="col-sm-4 text-left">
             <label>Email</label>
-              <input name="" class="form-control" placeholder="user@domain.com" type="email">
+          </div>
+          <div class="col-sm-4 text-left">
+            <label>Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5 text-left">
+            <input name="" class="form-control" placeholder="user@domain.com" type="email">
           </div>
           <!-- TODO: hide password input: https://codepen.io/Qanser/pen/dVRGJv -->
           <div class="col-sm-4 text-left">
-            <label>Password</label>
-              <input name="" class="form-control" placeholder="******" type="password">
+            <input name="" class="form-control" placeholder="******" type="password">
+            <a class="float-right" href="#">Forgot?</a>
           </div>
-          <!-- TODO: Fix wonky placement of login button -->
-          <div class="col-sm-2 text-center">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          <div class="col-sm-3 text-right">
+            <button type="button" class="mt-auto btn btn-block btn-primary">Log in</button>
           </div>
-        </div> <!-- form-group// -->
-      </div>
+        </div>
+      </div> <!-- row.// -->
     </div>
   </div>
 </div>
@@ -53,18 +53,20 @@
   <div class="row">
     <div class="col-sm-6 text-justify">
       <h3>About $(TITLE)</h3>
-      <h4>$(TITLE) provides a platform for Designers and Fabricators to make life saving medical equipment to support healthcare professionals and individual consumers.</h4>
-      <h4>Hospitals/Healthcare Professionals/Consumers</h4>
       <div class="col-sm-12">
-        <p>Make requests for custom medical equipment.</p>
+        <h4>$(TITLE) provides a platform for designers and fabricators to make life saving medical equipment to support healthcare professionals and individual consumers.</h4>
+        <br/>
       </div>
-      <h4>Designers</h4>
+      <h3>Who is $(TITLE) for?</h3>
       <div class="col-sm-12">
-        <p>View existing requests and submit your custom solutions.</p>
-      </div>
-      <h4>Fabricators</h4>
-      <div class="col-sm-12">
-        <p>Use your experience and fabrication tools to make life-saving medical equipment.</p>
+        <h4>Hospitals/Healthcare Professionals/Consumers</h4>
+        <div class="col-sm-12">
+          <p>Make requests for custom medical equipment.</p>
+        </div>
+        <h4>Fabricators</h4>
+        <div class="col-sm-12">
+          <p>Use your design experience and fabrication tools to design and build life-saving medical equipment.</p>
+        </div>
       </div>
     </div>
 
