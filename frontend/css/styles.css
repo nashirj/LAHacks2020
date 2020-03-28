@@ -64,3 +64,8 @@ body {
 .sidenav a:hover {
   color: #00008b;
 }
+
+.card-border {
+  border-style: solid;
+  margin-top: 10px;
+}
