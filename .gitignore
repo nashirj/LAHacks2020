@@ -2,3 +2,4 @@
 backend/backend.egg-info
 backend/venv
 
+.DS_Store
