@@ -160,6 +160,10 @@ class DesignPost(Base):
     def load_files(self):
         self.files = json.loads(self._files_json)['files']
 
+    def get_files(self):
+        self.load_files()
+        return self.files
+
 
 class DesignResponse(Base):
     resp_id = Column(String(32), primary_key=True)
@@ -218,6 +222,10 @@ class PrintPost(Base):
 
     def load_files(self):
         self.files = json.loads(self._files_json)['files']
+
+    def get_files(self):
+        self.load_files()
+        return self.files
 
 
 class PrintCommitment(Base):
