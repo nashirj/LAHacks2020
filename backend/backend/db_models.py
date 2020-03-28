@@ -1,7 +1,13 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Integer, Column, Text, Boolean, ForeignKey, ARRAY, String
+from sqlalchemy import Integer, Column, Text, Boolean, ForeignKey, ARRAY, String, PickleType
+
+import typing as T
+
 from passlib import hash
+import secrets
+import uuid
+import json
 
 Base = declarative_base()
 
@@ -17,6 +23,8 @@ class _AbstractUser(Base):
     geo_location_city = Column(String(75))
 
     _password_hash = Column(Text)
+    _session_token_hash = Column(Text)
+    _remember_me_token_hash = Column(Text)
     _user_type = Column(String(75))
 
     __tablename__ = "user"
@@ -25,8 +33,8 @@ class _AbstractUser(Base):
         "polymorphic_on": _user_type
     }
 
-    def __init__(self, uname: str, password: str, email: str, fname: str, lname: str, geo_country: str, geo_state: str,
-                 geo_city: str, user_type: str):
+    def __init__(self, uname: T.AnyStr, password: T.AnyStr, email: T.AnyStr, fname: T.AnyStr, lname: T.AnyStr,
+                 geo_country: T.AnyStr, geo_state: T.AnyStr, geo_city: T.AnyStr, user_type: T.AnyStr):
         self.username = uname
         self.email = email
         self.first_name = fname
@@ -40,8 +48,27 @@ class _AbstractUser(Base):
 
         self._password_hash = hash.pbkdf2_sha256.hash(password)
 
-    def verify_password(self, password: str) -> bool:
-        return hash.pbkdf2_sha256.hash(password) == self._password_hash
+    def generate_remember_me(self) -> str:
+        token = secrets.token_urlsafe(32)
+        self._remember_me_token_hash = hash.pbkdf2_sha256.hash(token)
+        return token
+
+    def verify_remember_me(self, token: T.AnyStr) -> bool:
+        return hash.pbkdf2_sha256.verify(token, self._remember_me_token_hash)
+
+    def refresh_session(self) -> str:
+        token = secrets.token_urlsafe(32)
+        self._session_token_hash = hash.pbkdf2_sha256.hash(token)
+        return token
+
+    def verify_session(self, token: T.AnyStr) -> bool:
+        return hash.pbkdf2_sha256.verify(token, self._session_token_hash)
+
+    def change_password(self, password: T.AnyStr) -> bool:
+        self._password_hash = hash.pbkdf2_sha256.hash(password)
+
+    def verify_password(self, password: T.AnyStr) -> bool:
+        return hash.pbkdf2_sha256.verify(password, self._password_hash)
 
     def __repr__(self):
         return "<User(uname={uname}, fullname=\"{fname} {lname}\", email={email}, user_type={usert}>".format(
@@ -59,10 +86,11 @@ class DoctorUser(_AbstractUser):
     biography = Column(Text)
 
     design_posts = relationship("DesignPost", back_populates="author", uselist=True)
-    print_posts = relationship("PrintPost", back_populates="author", uselis=True)
+    print_posts = relationship("PrintPost", back_populates="author", uselist=True)
 
-    def __init__(self, uname: str, password: str, email: str, fname: str, lname: str, geo_country: str,
-                 geo_state: str, geo_city: str, hospital: str, alma_mater: str, specialization: str, biography: str):
+    def __init__(self, uname: T.AnyStr, password: T.AnyStr, email: T.AnyStr, fname: T.AnyStr, lname: T.AnyStr, geo_country: T.AnyStr,
+                 geo_state: T.AnyStr, geo_city: T.AnyStr, hospital: T.AnyStr, alma_mater: T.AnyStr,
+                 specialization: T.AnyStr, biography: T.AnyStr):
         self.hospital = hospital
         self.alma_mater = alma_mater
         self.specialization = specialization
@@ -80,17 +108,16 @@ class FabUser(_AbstractUser):
     username = Column(Text, ForeignKey("user.username"), primary_key=True)
     hospital = Column(Text)
 
-    design_responses = relationship("DesignResponse", back_populates="author", use_list=True)
-    print_commitments = relationship("PrintCommitment", back_populates="author", use_list=True)
+    design_responses = relationship("DesignResponse", back_populates="author", uselist=True)
+    print_commitments = relationship("PrintCommitment", back_populates="author", uselist=True)
 
     printer_model = Column(Text)
-    filament_capable = Column(ARRAY(String(10)))
     print_quality_capable = Column(Integer)  # This should be a number out of 10
 
-    def __init__(self, uname: str, password: str, email: str, fname: str, lname: str, geo_country: str,
-                 geo_state: str, geo_city: str, printer_model: str, filament_capable: list, print_quality_capable: str):
+    def __init__(self, uname: T.AnyStr, password: T.AnyStr, email: T.AnyStr, fname: T.AnyStr, lname: T.AnyStr,
+                 geo_country: T.AnyStr, geo_state: T.AnyStr, geo_city: T.AnyStr, printer_model: T.AnyStr,
+                 print_quality_capable: T.AnyStr):
         self.printer_model = printer_model
-        self.filament_capable = filament_capable
         self.print_quality_capable = print_quality_capable
 
         super().__init__(uname, password, email, fname, lname, geo_country, geo_state, geo_city, "fabricator")
@@ -102,59 +129,93 @@ class FabUser(_AbstractUser):
 
 
 class DesignPost(Base):
-    post_id = Column(String(75))
+    post_id = Column(String(32), primary_key=True)
     title = Column(String(75))
     body = Column(Text)
-    files = Column(ARRAY(String(20)))
+    _files_json = Column(Text)
+    files = list()
     has_accepted_response = Column(Boolean)
 
     author_uname = Column(String(75), ForeignKey("doctor.username"))
-    author = relationship("DoctorUser", back_populates="posts")
-    responses = relationship("DesignResponse", back_populates="post", use_list=True)
+    author = relationship("DoctorUser", back_populates="design_posts")
+    responses = relationship("DesignResponse", back_populates="parent_post", uselist=True)
 
     __tablename__ = "design_post"
 
-    def __init__(self, title: str, body: str, images: list, author_uname: str, author: _AbstractUser):
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: T.List[str], author: _AbstractUser):
         self.title = title
         self.body = body
-        self.images = images
         self.author = author
+
+        self.files = files
+        self._files_json= json.dumps({'files': self.files})
+        self.post_id = uuid.uuid4().hex
+
+    def load_files(self):
+        self.files = json.loads(self._files_json)['files']
 
 
 class DesignResponse(Base):
+    resp_id = Column(String(32), primary_key=True)
     body = Column(Text)
-    files = Column(ARRAY(String(20)))
+    _files_json = Column(Text)
+    files = list()
     is_accepted_response = Column(Boolean)
 
     author_uname = Column(String(75), ForeignKey("fabricator.username"))
-    author = relationship("FabUser", back_populates="post_responses")
+    author = relationship("FabUser", back_populates="design_responses")
 
     parent_post_id = Column(String(75), ForeignKey("design_post.post_id"))
-    parent_post = relationship("DesignPost", back_populates="design_responses")
+    parent_post = relationship("DesignPost", back_populates="responses")
 
     __tablename__ = "design_reponse"
 
+    def __init__(self, body: T.AnyStr, files: T.List[str], author: FabUser, parent: DesignPost):
+        self.body = body
+        self.author = author
+        self.parent_post = parent
+
+        self.files = files
+        self._files_json = json.dumps({'files': self.files})
+
+        self.is_accepted_response
+
+        self.resp_id = uuid.uuid4().hex
+
+    def load_files(self):
+        self.files = json.loads(self._files_json)['files']
+
 
 class PrintPost(Base):
-    post_id = Column(String(75))
+    post_id = Column(String(32), primary_key=True)
     title = Column(String(75))
     body = Column(Text)
-    files = Column(ARRAY(String(20)))
+
+    _files_json = Column(Text)
+    files = list()
 
     author_uname = Column(String(75), ForeignKey("doctor.username"))
-    author = relationship("DoctorUser", back_populates="posts")
-    commitments = relationship("PrintCommitment", back_populates="post", use_list=True)
+    author = relationship("DoctorUser", back_populates="print_posts")
+    commitments = relationship("PrintCommitment", back_populates="parent_post", uselist=True)
 
     __tablename__ = "print_post"
 
-    def __init__(self, title: str, body: str, images: list, author_uname: str, author: _AbstractUser):
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: _AbstractUser):
         self.title = title
         self.body = body
-        self.images = images
         self.author = author
+
+        self.files = files
+        self._files_json = json.dumps({'files': self.files})
+
+        self.post_id = uuid.uuid4().hex
+
+    def load_files(self):
+        self.files = json.loads(self._files_json)['files']
 
 
 class PrintCommitment(Base):
+    resp_id = Column(String(32), primary_key=True)
     body = Column(Text)
     num_copies = Column(Integer)
     est_time_days = Column(Integer)
@@ -165,6 +226,16 @@ class PrintCommitment(Base):
     author = relationship("FabUser", back_populates="print_commitments")
 
     parent_post_id = Column(String(75), ForeignKey("print_post.post_id"))
-    parent_post = relationship("PrintPost", back_populates="print_commitments")
+    parent_post = relationship("PrintPost", back_populates="commitments")
 
     __tablename__ = "print_commitments"
+
+    def __init__(self, body: T.AnyStr, num_copies: int, est_time_days: int, author: FabUser, parent: PrintPost):
+        self.body = body
+        self.num_copies = num_copies
+        self.est_time_days = est_time_days
+        self.author = author
+        self.parent_post = parent
+
+        self.resp_id = uuid.uuid4().hex
+

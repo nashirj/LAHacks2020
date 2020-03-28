@@ -2,4 +2,6 @@
 backend/backend.egg-info
 backend/venv
 
+backend/backend/__pycache__
+
 .DS_Store
