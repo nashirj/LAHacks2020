@@ -60,28 +60,74 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-6">
-                <input name="" class="form-control" placeholder="First name" type="text">
+                <label>First name</label>
+                <input name="fname" class="form-control" placeholder="First name" type="text">
               </div>
               <div class="col-md-6">
-                <input name="" class="form-control" placeholder="Last name" type="text">
+                <label>Last name</label>
+                <input name="lname" class="form-control" placeholder="Last name" type="text">
               </div>
             </div>
-          </div> <!-- form-group// -->
+          </div> <!-- row// -->
           <div class="form-group">
-            <input name="" class="form-control" placeholder="Email" type="email">
-          </div> <!-- form-group// -->
+            <div class="row">
+              <div class="col-md-6">
+                <label>Username</label>
+                <input name="uname" class="form-control" placeholder="Username" type="text">
+              </div>
+              <div class="col-md-6">
+                <label>Email address</label>
+                <input name="email" class="form-control" placeholder="user@domain.com" type="email">
+              </div>
+            </div> <!-- row// -->
+          </div>
           <div class="form-group">
             <!-- TODO: add date of birth validation/make these drop downs -->
-            <label>Date of Birth</label>
+            <label>Date of Birth (MMMM-DD-YY)</label>
+            <input name="email" class="form-control" placeholder="user@domain.com" type="email">
+          </div>
+          
+          <div class="form-group">
             <div class="row">
-              <div class="col-md-4">
-                <input name="" class="form-control" placeholder="Month" type="text">
+              <div class="col-sm-12 text-left">
+                <label>Location</label>
               </div>
-              <div class="col-md-4">
-                <input name="" class="form-control" placeholder="Day" type="text">
+            </div>
+            <div class="row">
+              <div class="col-sm-3 text-left">
+                <input name="" class="form-control" placeholder="Country" type="text">
               </div>
-              <div class="col-md-4">
-                <input name="" class="form-control" placeholder="Year" type="text">
+              <div class="col-sm-3 text-left">
+                <input name="" class="form-control" placeholder="State" type="text">
+              </div>
+              <div class="col-sm-3 text-left">
+                <input name="" class="form-control" placeholder="City" type="text">
+              </div>
+              <div class="col-sm-3 text-left">
+                <input name="" class="form-control" placeholder="Hospital" type="text">
+              </div>
+            </div>
+          </div> <!-- row.// -->
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-12 text-left">
+                <label>Personal info</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 text-left">
+                <input name="" class="form-control" placeholder="Alma mater" type="text">
+              </div>
+              <div class="col-sm-6 text-left">
+                <input name="" class="form-control" placeholder="Specialization" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-12 text-left">
+                <textarea class="form-control" rows="2" placeholder="Brief bio" id="comment" name="text"></textarea>
               </div>
             </div>
           </div>
@@ -91,8 +137,6 @@
             <label>Your password</label>
               <input class="form-control" placeholder="******" type="password">
           </div> <!-- form-group// --> 
-          <div class="form-group"> 
-          </div> <!-- form-group// -->  
           <div class="form-group">
               <button type="submit" class="btn btn-primary btn-block"> Sign up  </button>
           </div> <!-- form-group// -->                                                           
@@ -113,8 +157,6 @@
     <span class="text-muted">Note: Users are expressly permitted to have both a doctor and a fabricator profile.</span>
   </div>
 </footer>
-
-
 
 </body>
 </html>
