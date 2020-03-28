@@ -1,0 +1,13 @@
+@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css";
+
+.row-bordered:after {
+  content: "";
+  display: block;
+  border-bottom: 2px solid #ccc;
+  margin: 0 15px;
+}
+
+
+.radio-labels label {
+  font-weight: normal;
+}
