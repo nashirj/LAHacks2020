@@ -1,0 +1,5 @@
+.idea/
+backend/.idea/
+backend/backend.egg-info
+backend/venv
+
