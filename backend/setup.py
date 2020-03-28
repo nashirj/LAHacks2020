@@ -13,6 +13,9 @@ requires = [
     'pyramid_jinja2',
     'pyramid_debugtoolbar',
     'waitress',
+    'pyramid_tm',
+    'sqlalchemy',
+    'zope.sqlalchemy'
     ]
 
 tests_require = [
