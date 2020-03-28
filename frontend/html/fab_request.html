@@ -10,7 +10,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-  
+
+
+
 <div class="container">
   <div class="row text-center">
     <!-- Description
@@ -20,32 +22,20 @@
     Pictures
     Hashtags
     -->
-    <h3>Make a design request</h3>
+    <h3>Make a fabrication request</h3>
   </div>
   <form action="#blah">
     <div class="form-group">
       <div class="row text-left">
-        <label for="comment">Brief description (include links to references if applicable)</label>
-        <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+        <label for="comment">Link to design</label>
+        <input id="design" class="form-control" type="text"></textarea>
       </div>
-      <br>
-      <div class="row text-left">
-          <p>Does this interface with an existing piece of equipment?</p>
-          <select id="displayMeasurements">
-             <option value="0"></option>       
-             <option value="Yes">Yes</option>
-             <option value="No">No</option>
-          </select>
-      </div>
-      <br>
-      <div id="measurements"></div>
-      </div>
+
       <div class="row text-left">
         <!-- space separate keywords -->
         <label for="comment">Keywords</label>
         <input name="" class="form-control" placeholder="urgent, disposable, etc" type="email">
       </div>
-      <br>
       <div class="row text-left">
         <label for="example-date-input">Date needed by</label>
         <div class="text-center">
@@ -60,19 +50,6 @@
   </form>
   </div>
 </div> <!--container end.//-->
-
-
-<script>
-  $('#displayMeasurements').change(function() {
-    opt = $(this).val();
-    if (opt=="Yes") {
-        $('#measurements').html('<div class="row text-center"><input class="form-control" type="date" placeholder="Description of existing equipment" id="example-date-input"></div><br>');
-    } else {
-        $('#measurements').html('');
-    }
-});
-</script>
-
 
 
 </body>
