@@ -151,6 +151,8 @@ class DesignPost(Base):
         self._files_json= json.dumps({'files': self.files})
         self.post_id = uuid.uuid4().hex
 
+        self.has_accepted_response = False
+
     def load_files(self):
         self.files = json.loads(self._files_json)['files']
 
@@ -178,7 +180,7 @@ class DesignResponse(Base):
         self.files = files
         self._files_json = json.dumps({'files': self.files})
 
-        self.is_accepted_response
+        self.is_accepted_response = False
 
         self.resp_id = uuid.uuid4().hex
 
