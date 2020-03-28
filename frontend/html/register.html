@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>$(TITLE)</title>
+  <title>$(TITLE) — New Doctors</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -15,7 +15,7 @@
 <div class="container">
   <div class="row row-bordered">
     <div class="col-sm-4">
-      <h2><a>$(TITLE)</a></h2>
+      <h2><a href="index.html">$(TITLE)</a></h2>
     </div>
     <div class="col-sm-3 text-left">
       <h2><a href="requests.html">Requests</a></h2>
@@ -49,45 +49,29 @@
 </div>
 
 
+<!-- TODO: make the signup form not take up full width of page -->
 <div class="container">
-  <div class="row">
-    <div class="col-sm-6 text-justify">
-      <h3>About $(TITLE)</h3>
-      <div class="col-sm-12">
-        <h4>$(TITLE) provides a platform for designers and fabricators to make life saving medical equipment to support healthcare professionals and individual consumers.</h4>
-        <br/>
+  <div class="text-center">
+    <h1>I want to sign up as a</h1>
+    <br>
+  </div>
+  <div class="card">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-2 text-center">
+        <button onclick="location.href = 'register_doc.html';" type="button" class="mt-auto btn btn-block btn-primary">Doctor</button>
       </div>
-      <h3>Who is $(TITLE) for?</h3>
-      <div class="col-sm-12">
-        <h4>Hospitals/Healthcare Professionals/Consumers</h4>
-        <div class="col-sm-12">
-          <p>Make requests for custom medical equipment.</p>
-        </div>
-        <h4>Fabricators</h4>
-        <div class="col-sm-12">
-          <p>Use your design experience and fabrication tools to design and build life-saving medical equipment.</p>
-        </div>
+      <div class="col-md-4  text-center">
+        <button onclick="location.href = 'register_fab.html';" type="button" class="mt-auto btn btn-block btn-primary">Fabricator</button>
       </div>
     </div>
-
-    <div class="col-sm-5 col-md-offset-1">
-    <div class="card">
-    <h3 class="text-center">Sign up</h3>
-      <div class="row">
-        <div class="col-md-6 text-center">
-          <button onclick="location.href = 'register_doc.html';" type="button" class="mt-auto btn btn-block btn-primary">Doctors</button>
-        </div>
-        <div class="col-md-6 text-center">
-          <button onclick="location.href = 'register_fab.html';" type="button" class="mt-auto btn btn-block btn-primary">Fabricators</button>
-        </div>
-      </div>
-    </div> <!-- card.// -->
-    </div> <!-- col.// -->
-  </div>  <!-- row.// -->
+  </div> <!-- card.// -->
 </div> <!--container end.//-->
 
-
-
+<footer class="footer">
+  <div class="container text-center">
+    <span class="text-muted">Note: Users are expressly permitted to have both a doctor and a fabricator profile.</span>
+  </div>
+</footer>
 
 </body>
 </html>
