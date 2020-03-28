@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, scoped_session, sessionmaker
 from sqlalchemy import Integer, Column, Text, Boolean, ForeignKey, ARRAY, String, PickleType
 
 import typing as T
@@ -8,11 +8,15 @@ from passlib import hash
 import secrets
 import uuid
 import json
+from zope.sqlalchemy import register
 
+
+DBSession = scoped_session(sessionmaker())
+register(DBSession)
 Base = declarative_base()
 
 
-class _AbstractUser(Base):
+class AbstractUser(Base):
     username = Column(String(75), primary_key=True)
     email = Column(String(75))
     first_name = Column(String(75))
@@ -77,7 +81,7 @@ class _AbstractUser(Base):
             email=self.email, usert=self._user_type)
 
 
-class DoctorUser(_AbstractUser):
+class DoctorUser(AbstractUser):
     username = Column(String(75), ForeignKey("user.username"), primary_key=True)
     hospital = Column(String(75))
 
@@ -104,7 +108,7 @@ class DoctorUser(_AbstractUser):
     }
 
 
-class FabUser(_AbstractUser):
+class FabUser(AbstractUser):
     username = Column(Text, ForeignKey("user.username"), primary_key=True)
     hospital = Column(Text)
 
@@ -142,7 +146,7 @@ class DesignPost(Base):
 
     __tablename__ = "design_post"
 
-    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: T.List[str], author: _AbstractUser):
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: T.List[str], author: AbstractUser):
         self.title = title
         self.body = body
         self.author = author
@@ -202,7 +206,7 @@ class PrintPost(Base):
 
     __tablename__ = "print_post"
 
-    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: _AbstractUser):
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: AbstractUser):
         self.title = title
         self.body = body
         self.author = author
