@@ -114,7 +114,7 @@ def profile_view(req: Request):
     }, req)
 
 
-@view_config(route_name='browse_prints', renderer='templates/browse/browse_prints.jinja2')
+@view_config(route_name='browse_prints', renderer='templates/browse_prints.jinja2')
 def browse_prints_view(req: Request):
     is_logged_in = verify_user_token(req)
 
@@ -155,7 +155,7 @@ def browse_prints_view(req: Request):
             'prints_display': prints}
 
 
-@view_config(route_name='browse_designs', renderer='templates/browse/browse_designs.jinja2')
+@view_config(route_name='browse_designs', renderer='templates/browse_designs.jinja2')
 def browse_designs_view(req: Request):
     is_logged_in = verify_user_token(req)
 
@@ -179,10 +179,11 @@ def browse_designs_view(req: Request):
 
 
 @view_config(route_name='register_doctor_post')
-def register_doctor(req: Request):
+def register_doctor_post(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
+    print("are we in boys?")
     data = req.POST
     uname = data.get('uname')
     passwd = data.get('password')
@@ -196,6 +197,7 @@ def register_doctor(req: Request):
     alma_mater = data.get('alma_mater')
     spec = data.get('specialization')
     bio = data.get('bio')
+    print("we in boys")
 
     if uname and passwd and email and fname and lname and country and state and city and hospital and alma_mater \
             and spec and bio:
@@ -210,14 +212,16 @@ def register_doctor(req: Request):
 
         return HTTPFound(req.params.get('return', '/'))
     else:
+        print("gosh darn it")
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='register_doctor_page', renderer='templates/create/create_doctor_profile.jinja2')
+@view_config(route_name='register_doctor_page', renderer='templates/create_doctor_profile.jinja2')
 def register_doctor_page(req: Request):
     is_logged_in = verify_user_token(req)
     if is_logged_in:
         return HTTPFound("/")
+    print("here we go to neverland")
 
     return {"is_logged_in": is_logged_in, 'user_name': None}
 
@@ -254,7 +258,7 @@ def register_fab(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='view_print', renderer='templates/view/view_print.jinja2')
+@view_config(route_name='view_print', renderer='templates/view_print.jinja2')
 def view_print(req: Request):
     is_logged_in = verify_user_token(req)
     is_doctor = False
@@ -345,7 +349,7 @@ def view_design(req: Request):
             'is_doctor': is_doctor, 'is_post_owner': is_post_owner}
 
 
-@view_config(route_name='submit_print_commitment_page', renderer='templates/submit/submit_print_page.jinja2')
+@view_config(route_name='submit_print_commitment_page', renderer='templates/submit_print_page.jinja2')
 def submit_print_page(req: Request):
     is_logged_in = verify_user_token(req)
     user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
@@ -376,7 +380,7 @@ def submit_print(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='submit_design_response_page', renderer='templates/submit/submit_design_page.jinja2')
+@view_config(route_name='submit_design_response_page', renderer='templates/submit_design_page.jinja2')
 def submit_design_response_page(req: Request):
     is_logged_in = verify_user_token(req)
     user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
@@ -407,7 +411,7 @@ def submit_design_response_post(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='create_print_request_page', renderer='templates/create/create_print_request.jinja2')
+@view_config(route_name='create_print_request_page', renderer='templates/create_print_request.jinja2')
 def create_print_request_page(req: Request):
     is_logged_in = verify_user_token(req)
     user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
@@ -443,7 +447,7 @@ def create_print_request_post(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='create_design_request_page', renderer='templates/create/create_design_request.jinja2')
+@view_config(route_name='create_design_request_page', renderer='templates/create_design_request.jinja2')
 def create_design_request_page(req: Request):
     is_logged_in = verify_user_token(req)
     user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
