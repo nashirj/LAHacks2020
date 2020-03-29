@@ -55,7 +55,7 @@
 
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                  <div class="row">
+                              <div class="row">
                                   <div class="col-md-6">
                                       <label>User Id</label>
                                   </div>
@@ -65,34 +65,50 @@
                               </div>
                               <div class="row">
                                   <div class="col-md-6">
-                                      <label>Name</label>
-                                  </div>
-                                  <div class="col-md-6 profile-details">
-                                      <p>Kshiti Ghelani</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
                                       <label>Email</label>
                                   </div>
                                   <div class="col-md-6 profile-details">
-                                      <p>kshitighelani@gmail.com</p>
+                                      <p>$(email)</p>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-md-6">
-                                      <label>Phone</label>
+                                      <label>Country</label>
                                   </div>
                                   <div class="col-md-6 profile-details">
-                                      <p>123 456 7890</p>
+                                      <p>$(country)</p>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-md-6">
-                                      <label>Profession</label>
+                                      <label>State or province</label>
                                   </div>
                                   <div class="col-md-6 profile-details">
-                                      <p>Web Developer and Designer</p>
+                                      <p>$(state)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>City</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(city)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Alma mater</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(almamater)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Specialization</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(specialization)</p>
                                   </div>
                               </div>
                 </div>
@@ -107,6 +123,7 @@
                                       <div class="card-body">
                                         <h5 class="card-title">Design request $(i), $(date)</h5>
                                         <p class="card-text">Description of the design request</p>
+                                        <!-- TODO: show request if there is not an accepted solution -->
                                         <a href="design_request.html" class="btn btn-primary">View request details</a>
                                       </div>
                                     </div>
@@ -123,6 +140,7 @@
                                       <div class="card-body">
                                         <h5 class="card-title">Design request $(i), $(date)</h5>
                                         <p class="card-text">Description of the design request</p>
+                                        <!-- TODO: show request if there is not an accepted solution -->
                                         <a href="design_request.html" class="btn btn-primary">View request details</a>
                                       </div>
                                     </div>
