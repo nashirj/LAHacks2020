@@ -25,12 +25,12 @@
             {% if is_logged_in %}
                 <h2><a href="/user/{{ user_name }}">My profile</a></h2>
             {% else %}
-                <form>
+                <form action="/login" method="POST" role="form">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-5 text-left">
-                                    <label>Email</label>
+                                    <label>Username</label>
                                 </div>
                                 <div class="col-sm-3 text-left">
                                     <label>Password</label>
@@ -41,13 +41,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-5 text-left">
-                                    <input name="" class="form-control" placeholder="user@domain.com" type="email">
+                                    <input name="username" class="form-control" placeholder="Username" type="text">
                                 </div>
                                 <div class="col-sm-4 text-left">
-                                    <input name="" class="form-control" placeholder="******" type="password">
+                                    <input name="password" class="form-control" placeholder="******" type="password">
                                 </div>
                                 <div class="col-sm-3 text-right">
-                                    <button type="button" class="mt-auto btn btn-block btn-primary">Log in</button>
+                                    <button type="submit" class="mt-auto btn btn-block btn-primary">Log in</button>
                                 </div>
                             </div>
                         </div> <!-- row.// -->
