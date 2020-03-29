@@ -72,8 +72,8 @@ body {
 }
 
 .verified-box {
-  float: left;
-  width: 100px;
+  /*float: left;*/
+  width: 125px;
   height: 20px;
   background-color: green;
   color: white;
@@ -81,8 +81,14 @@ body {
   text-align: center;
 }
 
-.verify-button {
-  margin-right: 15px;
+.not-verified-box {
+  /*float: left;*/
+  width: 125px;
+  height: 20px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .request-border {
@@ -98,3 +104,20 @@ body {
 .top-buffer { margin-top:20px; }
 
 .left-buffer p { padding-left:10px; }
+
+.right-buffer p { padding-right:10px; }
+
+/* Style buttons */
+.download-btn {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Darker background on mouse-over */
+.download-btn:hover {
+  background-color: RoyalBlue;
+}
