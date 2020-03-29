@@ -3,6 +3,9 @@ from backend.db_models import DBSession, AbstractUser
 
 
 def verify_user_token(req: Request):
+    if req.session.get('uname') is None:
+        return False
+
     user: AbstractUser = DBSession.query(AbstractUser).filter_by(username=req.session['uname']).first()
     if user is None:
         return False

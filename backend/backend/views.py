@@ -11,6 +11,17 @@ from backend.util import verify_user_token, get_user_geoloc
 
 import datetime
 
+
+@view_config(route_name='home', renderer='templates/base_layout.jinja2')
+def home(req: Request):
+    is_logged_in = verify_user_token(req)
+    username = None
+    if req.session.get('username'):
+        username = req.session.get('username')
+
+    return {'is_logged_in': is_logged_in, 'user_name': username}
+
+
 @view_config(route_name='login')
 def login_view(req: Request):
     if req.method != 'POST':
@@ -167,7 +178,7 @@ def browse_designs_view(req: Request):
             'designs_display': designs}
 
 
-@view_config(route_name='register_doctor')
+@view_config(route_name='register_doctor_post')
 def register_doctor(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
@@ -202,7 +213,16 @@ def register_doctor(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='register_fab')
+@view_config(route_name='register_doctor_page', renderer='templates/create/create_doctor_profile.jinja2')
+def register_doctor_page(req: Request):
+    is_logged_in = verify_user_token(req)
+    if is_logged_in:
+        return HTTPFound("/")
+
+    return {"is_logged_in": is_logged_in, 'user_name': None}
+
+
+@view_config(route_name='register_fab_post')
 def register_fab(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
@@ -356,8 +376,8 @@ def submit_print(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='submit_design_request_page')
-def submit_design_page(req: Request):
+@view_config(route_name='submit_design_response_page', renderer='templates/submit/submit_design_page.jinja2')
+def submit_design_response_page(req: Request):
     is_logged_in = verify_user_token(req)
     user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
     if not is_logged_in or not user:
@@ -366,8 +386,8 @@ def submit_design_page(req: Request):
     return {'is_logged_in': is_logged_in, 'user_name': user.username}
 
 
-@view_config(route_name='submit_design_request_post')
-def submit_design(req: Request):
+@view_config(route_name='submit_design_response_post')
+def submit_design_response_post(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
@@ -398,29 +418,63 @@ def create_print_request_page(req: Request):
 
 
 @view_config(route_name='create_print_request_post')
-def process_print_request(req: Request):
+def create_print_request_post(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session['username'])
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
-    if user._user_type != 'doctor':
-        return HTTPUnauthorized("You must be a doctor to submit print requests")
 
-    post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
     title = data.get('title')
     body = data.get('print-notes')
     files = data.get('files')
     num_parts = data.get('num_parts')
 
-    if post and title and body and files:
-        new_design_submission = m.PrintPost(title, body, files, user, datetime.datetime.now(), num_parts)
+    if title and body and files and num_parts:
+        new_print_request = m.PrintPost(title, body, files, user, datetime.datetime.now(), num_parts)
 
-        DBSession.add(new_design_submission)
+        DBSession.add(new_print_request)
         DBSession.commit()
 
         return HTTPFound(req.params.get('return', '/'))
     else:
         return HTTPBadRequest("Malformed request")
+
+
+@view_config(route_name='create_design_request_page', renderer='templates/create/create_design_request.jinja2')
+def create_design_request_page(req: Request):
+    is_logged_in = verify_user_token(req)
+    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    if not is_logged_in or not user:
+        return HTTPUnauthorized("You must be logged in to view this page")
+
+    return {'is_logged_in': is_logged_in, 'user_name': user.username}
+
+
+@view_config(route_name='create_design_request_post')
+def create_design_request_post(req: Request):
+    if req.method != 'POST':
+        return HTTPMethodNotAllowed("This route only valid for POST request")
+
+    is_logged_in = verify_user_token(req)
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session['username'])
+    if not is_logged_in or not user:
+        return HTTPUnauthorized("You must be logged in to view this page")
+
+    data = req.POST
+    title = data['title']
+    body = data['body']
+    files = data['files']
+
+    if data and title and body and files:
+        new_design_request = m.DesignPost(title, body, files, user, datetime.datetime.now())
+
+        DBSession.add(new_design_request)
+        DBSession.commit()
+
+        return HTTPFound(req.params.get('return', '/'))
+    else:
+        return HTTPBadRequest("Malformed request")
+

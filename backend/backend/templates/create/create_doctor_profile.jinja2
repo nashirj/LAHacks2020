@@ -1,0 +1,121 @@
+{% extends 'base_layout.jinja2' %}
+
+{% block content %}
+    <div class="container top-buffer">
+        <div class="text-center">
+            <h1>Sign up as a doctor</h1>
+        </div>
+        <div class="row">
+            <div class="card">
+                <article class="card-body">
+                    <form target="./post" method="post">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>First name</label>
+                                    <input name="fname" class="form-control" placeholder="First name" type="text">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Last name</label>
+                                    <input name="lname" class="form-control" placeholder="Last name" type="text">
+                                </div>
+                            </div>
+                        </div> <!-- row// -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Username</label>
+                                    <input name="uname" class="form-control" placeholder="Username" type="text">
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- TODO: add validation of password to meet minimum requirements -->
+                                    <label>Your password</label>
+                                    <input name="passwd" class="form-control" placeholder="******" type="password">
+                                </div>
+                            </div> <!-- row// -->
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 text-left">
+                                    <!-- TODO: add date of birth validation/make these drop downs -->
+                                    <label>Date of Birth (YYYY-MM-DD)</label>
+                                    <input name="dob" class="form-control" placeholder="YYYY-MM-DD" type="date">
+                                </div>
+                                <div class="col-sm-6 text-left">
+                                    <label>Email address</label>
+                                    <input name="email" class="form-control" placeholder="user@domain.com" type="email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12 text-left">
+                                    <label>Location</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 text-left">
+                                    <input name="country" class="form-control" placeholder="Country" type="text">
+                                </div>
+                                <div class="col-sm-3 text-left">
+                                    <input name="state" class="form-control" placeholder="State" type="text">
+                                </div>
+                                <div class="col-sm-3 text-left">
+                                    <input name="city" class="form-control" placeholder="City" type="text">
+                                </div>
+                                <div class="col-sm-3 text-left">
+                                    <input name="hospital" class="form-control" placeholder="Hospital" type="text">
+                                </div>
+                            </div>
+                        </div> <!-- row.// -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12 text-left">
+                                    <label>Credentials</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 text-left">
+                                    <input name="alma_mater" class="form-control" placeholder="Alma mater" type="text">
+                                </div>
+                                <div class="col-sm-6 text-left">
+                                    <input name="specialization" class="form-control" placeholder="Specialization" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12 text-left">
+                                    <label>Tell other users a bit about yourself</label>
+                                    <textarea class="form-control" rows="2" placeholder="Brief bio" id="comment"
+                                              name="bio"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Sign up</button>
+                        </div> <!-- form-group// -->
+                    </form> <!-- form// -->
+                </article>
+            </div> <!-- card.// -->
+        </div>
+    </div>  <!-- row.// -->
+    <div class="row text-center">
+        <h2>
+            I want to sign up as a <a href="/register/fabricator">fabricator</a> instead.
+        </h2>
+    </div>
+    </div> <!--container end.//-->
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">Note: Users are expressly permitted to have both a doctor and a fabricator profile.</span>
+        </div>
+    </footer>
+{% endblock %}

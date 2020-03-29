@@ -68,6 +68,21 @@ body {
 .card-border {
   border-style: solid;
   margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.verified-box {
+  float: left;
+  width: 100px;
+  height: 20px;
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.verify-button {
+  margin-right: 15px;
 }
 
 .request-border {
@@ -75,3 +90,11 @@ body {
   border-width: 1px;
   border-color: #696969;
 }
+
+.border-primary { border: 1px solid lightgrey; }
+
+.bottom-buffer { margin-bottom:20px; }
+
+.top-buffer { margin-top:20px; }
+
+.left-buffer p { padding-left:10px; }

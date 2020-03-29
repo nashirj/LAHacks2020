@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% block  %}
-        <title>$(TITLE)</title>
+    {% block head %}
+        <title>Med3D</title>
     {% endblock %}
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="/static/styles.css" type="text/css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <!-- TODO: figure out how to add header padding -->
-<div class="container">
+<div class="container top-buffer">
     <div class="row row-bordered">
         <div class="col-sm-4">
-            <h2><a>$(TITLE)</a></h2>
+            <h2><a>Med3D</a></h2>
         </div>
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-8 text-right">
             <!-- this directs back to user profile -->
             {% if is_logged_in %}
                 <h2><a href="/user/{{ user_name }}">My profile</a></h2>
             {% else %}
-                <div class="col-sm-5 text-right">
+                <div class="col-sm-12">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-5 text-left">
@@ -67,7 +67,48 @@
 
 <div class="container">
     {% block content %}
-        <p>No content</p>
+        <div class="container top-buffer">
+            <div class="row">
+                <div class="col-sm-6 text-justify">
+                    <h3>About Med3D</h3>
+                    <div class="col-sm-12">
+                        <h4>Med3D provides a platform for designers and fabricators to make life saving medical
+                            equipment to support healthcare professionals and individual consumers.</h4>
+                        <br/>
+                    </div>
+                    <h3>Who is Med3D for?</h3>
+                    <div class="col-sm-12">
+                        <h4>Hospitals/Healthcare Professionals/Consumers</h4>
+                        <div class="col-sm-12">
+                            <p>Make requests for custom medical equipment.</p>
+                        </div>
+                        <h4>Fabricators</h4>
+                        <div class="col-sm-12">
+                            <p>Use your design experience and fabrication tools to design and build life-saving medical
+                                equipment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-md-offset-1">
+                    <div class="card">
+                        <h3 class="text-center">Sign up</h3>
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <button onclick="location.href = '/register/doctor';" type="button"
+                                        class="mt-auto btn btn-block btn-primary">Doctors
+                                </button>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <button onclick="location.href = '/register/fabricator';" type="button"
+                                        class="mt-auto btn btn-block btn-primary">Fabricators
+                                </button>
+                            </div>
+                        </div>
+                    </div> <!-- card.// -->
+                </div> <!-- col.// -->
+            </div>  <!-- row.// -->
+        </div>
     {% endblock content %}
 </div>
 
