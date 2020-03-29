@@ -24,3 +24,22 @@ def get_user_geoloc(uname: str) -> dict:
         }
 
     return geoloc
+
+
+def store_file_view(files_list):
+    file_path_list = []
+
+    for input in files_list:
+        filename = input.filename
+        input_file = input.file
+        file_path = os.path.join('/store_file_view/', '%s.stl' % uuid.uuid4())
+        temp_file_path = file_path + '~'
+
+        input_file.seek(0)
+        with open(temp_file_path, 'wb') as output_file:
+            shutil.copyfileobj(input_file, output_file)
+
+        os.rename(temp_file_path, file_path)
+        file_path_list.append(file_path)
+
+    return file_path_list
