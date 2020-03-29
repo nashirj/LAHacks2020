@@ -25,8 +25,10 @@ def main(global_config, **settings):
     config.add_route('register_doctor', '/register/doctor')
     config.add_route('register_fab', '/register/fab')
     config.add_route('browse_prints', '/print/browse')
+    config.add_route('submit_print', '/print/{post_id}/submit')
     config.add_route('view_print', '/print/{post_id}')
     config.add_route('browse_designs', '/design/browse')
+    config.add_route('submit_design', '/design/{post_id}/submit')
     config.add_route('view_design', '/design/{post_id}')
 
     config.scan()

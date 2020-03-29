@@ -208,6 +208,7 @@ class PrintPost(Base):
     post_id = Column(String(32), primary_key=True)
     title = Column(String(75))
     body = Column(Text)
+    num_parts_needed = Column(Integer)
 
     _files_json = Column(Text)
     files = list()
@@ -221,10 +222,12 @@ class PrintPost(Base):
 
     __tablename__ = "print_post"
 
-    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: AbstractUser, date: Date):
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: AbstractUser,
+                 date: Date, num_parts_needed: int):
         self.title = title
         self.body = body
         self.author = author
+        self.num_parts_needed = num_parts_needed
 
         self.files = files
         self._files_json = json.dumps({'files': self.files})
