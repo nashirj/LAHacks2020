@@ -72,8 +72,8 @@ body {
 }
 
 .verified-box {
-  float: left;
-  width: 100px;
+  /*float: left;*/
+  width: 125px;
   height: 20px;
   background-color: green;
   color: white;
@@ -81,8 +81,14 @@ body {
   text-align: center;
 }
 
-.verify-button {
-  margin-right: 15px;
+.not-verified-box {
+  /*float: left;*/
+  width: 125px;
+  height: 20px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .request-border {
