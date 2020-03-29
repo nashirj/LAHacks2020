@@ -44,21 +44,25 @@ def browse_prints_view(req: Request):
                                                                             geo_location_state=user_loc_data['state'],
                                                                             geo_location_city=user_loc_data['city']))
         for doc in doctors_matching_loc:
-            for post in doc.design_posts:
+            for post in doc.print_posts:
                 responses = []
 
                 prints.append({
                     'title': post.title,
+                    'uid': post.post_id,
                     'body': post.body,
                     'author': post.author_uname,
+                    'hospital': doc.hospital,
                     'files': post.get_files()
                 })
     else:
         # TODO: fix this later, temporary code only displays one doctor's posts if not logged in
-        posts = DBSession.query(m.DoctorUser).first().posts
+        doc = DBSession.query(m.DoctorUser).first()
+        posts = doc.print_posts
         for post in posts:
             prints.append({
                 'title': post.title,
+                'uid': post.post_id,
                 'body': post.body,
                 'author': post.author_uname,
                 'files': post.get_files()
