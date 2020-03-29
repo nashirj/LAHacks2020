@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>$(TITLE) — Accept Print Job</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="container">
+  <div class="row text-center">
+    <!-- Description
+    Measurements (if applicable)
+    i.e. if it needs to interface with an existing device
+    Date needed by (YYYY-MM-DD)
+    Pictures
+    Hashtags
+    -->
+    <h1>Submit a design</h1>
+  </div>
+  <div class="row">
+    <div class="card">
+      <article class="card-body">
+        <form>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <!-- change this to a dynamic thing that lets user select from repo -->
+                <label>Link to existing design request</label>
+                <input id="design" class="form-control" type="text"></input>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleInputFile">STL upload</label>
+                  <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <!-- space separate keywords -->
+                <label>Fabrication notes</label>
+                <textarea rows="5" placeholder="Talk about potential print issues, slicer settings, or whatever may be relevant for someone fabricating this design." name="print-notes" class="form-control" placeholder="" type="text"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row text-center">
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </article>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
