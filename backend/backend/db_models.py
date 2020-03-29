@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, scoped_session, sessionmaker
 from sqlalchemy import Integer, Column, Text, Boolean, ForeignKey, ARRAY, String, PickleType, Date, func
@@ -222,7 +224,7 @@ class PrintPost(Base):
 
     __tablename__ = "print_post"
 
-    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: AbstractUser,
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author: AbstractUser,
                  date: Date, num_parts_needed: int):
         self.title = title
         self.body = body
@@ -234,7 +236,7 @@ class PrintPost(Base):
 
         self.post_id = uuid.uuid4().hex
 
-        self.date_created = func.current_date()
+        self.date_created = datetime.datetime.now()
         self.date_needed = date
 
     def load_files(self):
@@ -269,7 +271,7 @@ class PrintCommitment(Base):
         self.author = author
         self.parent_post = parent
 
-        self.date_created = func.current_date()
+        self.date_created = datetime.datetime.now()
 
         self.resp_id = uuid.uuid4().hex
 
