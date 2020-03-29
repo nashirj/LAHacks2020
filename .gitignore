@@ -1,6 +1,7 @@
 .idea/
 backend/backend.egg-info
 backend/venv
+backend/.idea
 
 backend/backend/__pycache__
 
