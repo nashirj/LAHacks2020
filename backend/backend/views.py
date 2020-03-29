@@ -200,24 +200,17 @@ def view_design(req: Request):
         if user._user_type == "doctor":
             is_doctor = True
 
-    post = DBSession.query(m.PrintPost).filter_by(req.matchdict['post_id']).first()
+    post = DBSession.query(m.DesignPost).filter_by(req.matchdict['post_id']).first()
 
-    commitments = []
-    for resp in post.commitments:
-        commitments.append({
+    responses = []
+    for resp in post.response:
+        responses.append({
             'author': resp.author_uname,
-            'num_copies': resp.num_copies,
             'date_created': resp.date_created,
+            'is_accepted_response': resp.is_accepted_response,
             'files': resp.get_files()
         })
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'view_print',
-            'post': post, 'commitments': commitments, 'is_doctor': is_doctor}
+            'post': post, 'responses': responses, 'is_doctor': is_doctor}
 
-
-# This snippet is for viewing a particular print, I wrote it in the wrong location, so I'm leaving it here for later
-# for resp in post.responses:
-#     responses.append({
-#         'author': resp.author_uname,
-#         'files': resp.get_files()
-#     })
