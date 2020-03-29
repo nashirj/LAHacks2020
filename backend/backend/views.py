@@ -157,7 +157,7 @@ def browse_prints_view(req: Request):
 
     prints = []
     if is_logged_in:
-        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('username')).first()
+        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('uname')).first()
         if user._user_type == "doctor":
             is_doctor = True
 
@@ -192,7 +192,7 @@ def browse_prints_view(req: Request):
                 'date_needed': str(post.date_needed)
             })
 
-    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('username'), 'page': 'browse_prints',
+    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'browse_prints',
             'prints_display': prints, 'is_doctor': is_doctor}
 
 
@@ -202,7 +202,7 @@ def browse_designs_view(req: Request):
     is_doctor = False
 
     if is_logged_in:
-        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('username')).first()
+        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('uname')).first()
         if user._user_type == "doctor":
             is_doctor = True
 
@@ -221,7 +221,7 @@ def browse_designs_view(req: Request):
             'date_needed': str(design.date_need)
         })
 
-    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('username'), 'page': 'browse_designs',
+    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'browse_designs',
             'designs_display': designs, 'is_doctor': is_doctor}
 
 
