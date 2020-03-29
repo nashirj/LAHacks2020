@@ -242,7 +242,7 @@ def register_doctor_page(req: Request):
 
 
 @view_config(route_name='register_fab_post')
-def register_fab(req: Request):
+def register_fab_post(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
@@ -271,6 +271,15 @@ def register_fab(req: Request):
         return HTTPFound(req.params.get('return', '/'))
     else:
         return HTTPBadRequest("Malformed request")
+
+
+@view_config(route_name='register_fab_page', renderer='templates/create_fab_profile.jinja2')
+def register_fab_page(req: Request):
+    is_logged_in = verify_user_token(req)
+    if is_logged_in:
+        return HTTPFound("/")
+
+    return {"is_logged_in": is_logged_in, 'user_name': None}
 
 
 @view_config(route_name='view_print', renderer='templates/view_print.jinja2')
