@@ -79,9 +79,22 @@ def browse_prints_view(req: Request):
 def browse_designs_view(req: Request):
     is_logged_in = verify_user_token(req)
 
-    designs = list(DBSession.query.order_by(m.DesignPost.date_created.desc()))
+    designs = []
+    sorted_designs = list(DBSession.query.order_by(m.DesignPost.date_created.desc()))
 
-    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'Browse Designs',
+    for design in sorted_designs:
+        designs.append({
+            'title': design.title,
+            'uid': design.post_id,
+            'body': design.body,
+            'author': design.author_uname,
+            'hospital': design.author.hospital,
+            'files': design.get_files(),
+            'date_created': str(design.date_created),
+            'date_needed': str(design.date_need)
+        })
+
+    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_designs',
             'designs_display': designs}
 
 
@@ -120,16 +133,86 @@ def register_doctor(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='register_fab', renderer='templates/register_fab.jinja2')
-def register_rab(req: Request):
-    new_fab = m.FabUser(req.params['uname'], req.params['password'], req.params['email'], req.params['fname'],
-                        req.params['lname'], req.params['country'], req.params['state'], req.params['city'],
-                        req.params['printer model'], req.params['print quality'])
+@view_config(route_name='register_fab')
+def register_fab(req: Request):
+    if req.method != 'POST':
+        return HTTPMethodNotAllowed("This route only valid for POST request")
 
-    DBSession.add(new_fab)
-    DBSession.commit()
+    data = req.POST
+    uname = data.get('uname')
+    passwd = data.get('password')
+    email = data.get('email')
+    fname = data.get('fname')
+    lname = data.get('lname')
+    country = data.get('country')
+    state = data.get('state')
+    city = data.get('city')
+    printer_model = data.get('printer model')
+    print_quality = data.get('print quality')
 
-    # TODO: Return something here
+    if uname and passwd and email and fname and lname and country and state and city and printer_model and print_quality:
+        new_fab = m.FabUser(uname, passwd, email, fname, lname, country, state, city, printer_model, print_quality)
+
+        DBSession.add(new_fab)
+        DBSession.commit()
+
+        new_token = new_fab.refresh_session()
+        req.session['uname'] = uname
+        req.session['session_token'] = new_token
+
+        return HTTPFound(req.params.get('return', '/'))
+    else:
+        return HTTPBadRequest("Malformed request")
+
+
+@view_config(route_name='view_print', renderer='templates/view_print.jinja2')
+def view_print(req: Request):
+    is_logged_in = verify_user_token(req)
+    is_doctor = False
+
+    if is_logged_in:
+        user = DBSession.query(m.AbstractUser).filter_by(username=req.session['uname']).first()
+        if user._user_type == "doctor":
+            is_doctor = True
+
+    post = DBSession.query(m.PrintPost).filter_by(req.matchdict['post_id']).first()
+
+    commitments = []
+    for resp in post.commitments:
+        commitments.append({
+            'author': resp.author_uname,
+            'num_copies': resp.num_copies,
+            'date_created': resp.date_created,
+            'files': resp.get_files()
+        })
+
+    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'view_print',
+            'post': post, 'commitments': commitments, 'is_doctor': is_doctor}
+
+
+@view_config(route_name='view_design', renderer='templates/view_design.jinja2')
+def view_design(req: Request):
+    is_logged_in = verify_user_token(req)
+    is_doctor = False
+
+    if is_logged_in:
+        user = DBSession.query(m.AbstractUser).filter_by(username=req.session['uname']).first()
+        if user._user_type == "doctor":
+            is_doctor = True
+
+    post = DBSession.query(m.PrintPost).filter_by(req.matchdict['post_id']).first()
+
+    commitments = []
+    for resp in post.commitments:
+        commitments.append({
+            'author': resp.author_uname,
+            'num_copies': resp.num_copies,
+            'date_created': resp.date_created,
+            'files': resp.get_files()
+        })
+
+    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'view_print',
+            'post': post, 'commitments': commitments, 'is_doctor': is_doctor}
 
 
 # This snippet is for viewing a particular print, I wrote it in the wrong location, so I'm leaving it here for later
