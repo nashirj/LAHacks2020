@@ -66,7 +66,9 @@ def browse_prints_view(req: Request):
                 'uid': post.post_id,
                 'body': post.body,
                 'author': post.author_uname,
-                'files': post.get_files()
+                'files': post.get_files(),
+                'date_created': str(post.date_created),
+                'date_needed': str(post.date_needed)
             })
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_prints',
