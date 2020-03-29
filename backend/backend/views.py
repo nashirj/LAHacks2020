@@ -85,7 +85,29 @@ def browse_designs_view(req: Request):
             'designs_display': designs}
 
 
-# @view_config(route_name='register_doc', renderer='templates/register_doctor.jinja2')
+@view_config(route_name='register_doctor', renderer='templates/register_doctor.jinja2')
+def register_doctor(req: Request):
+    new_doctor = m.DoctorUser(req.params['uname'], req.params['password'], req.params['email'], req.params['fname'],
+                              req.params['lname'], req.params['country'], req.params['state'], req.params['city'],
+                              req.params['hospital'], req.params['alma mater'], req.params['specialization'],
+                              req.params['bio'])
+
+    DBSession.add(new_doctor)
+    DBSession.commit()
+
+    # TODO: Return something here
+
+
+@view_config(route_name='register_fab', renderer='templates/register_fab.jinja2')
+def register_rab(req: Request):
+    new_fab = m.FabUser(req.params['uname'], req.params['password'], req.params['email'], req.params['fname'],
+                        req.params['lname'], req.params['country'], req.params['state'], req.params['city'],
+                        req.params['printer model'], req.params['print quality'])
+
+    DBSession.add(new_fab)
+    DBSession.commit()
+
+    # TODO: Return something here
 
 
 # This snippet is for viewing a particular print, I wrote it in the wrong location, so I'm leaving it here for later
