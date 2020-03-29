@@ -8,4 +8,6 @@ db.sqlite
 
 frontend/Madeleine.js/
 
+frontend/render_stls_serverside
+
 .DS_Store
