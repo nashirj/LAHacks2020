@@ -164,7 +164,7 @@ def browse_prints_view(req: Request):
         user_loc_data = get_user_geoloc(req.session['uname'])
         doctors_matching_loc = list(dbs.query(m.DoctorUser).filter_by(geo_location_cntry=user_loc_data['country'],
                                                                             geo_location_state=user_loc_data['state'],
-                                                                            geo_location_city=user_loc_data['city'])).first()
+                                                                            geo_location_city=user_loc_data['city']))
         for doc in doctors_matching_loc:
             for post in doc.print_posts:
                 responses = []
@@ -484,7 +484,7 @@ def submit_design_response_post(req: Request):
 @view_config(route_name='create_print_request_page', renderer='templates/create_print_request.jinja2')
 def create_print_request_page(req: Request):
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.FabUser).filter_by(username=req.session.get('uname'))
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname')).first()
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -526,7 +526,7 @@ def create_print_request_post(req: Request):
 def create_design_request_page(req: Request):
     is_logged_in = verify_user_token(req)
 
-    user = DBSession.query(m.FabUser).filter_by(username=req.session.get('uname'))
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname')).first()
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
