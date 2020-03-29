@@ -1,6 +1,7 @@
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed
 from pyramid.view import view_config
 from pyramid.request import Request
+from sqlalchemy import func
 
 import backend.db_models as m
 from backend.db_models import DBSession
@@ -70,6 +71,19 @@ def browse_prints_view(req: Request):
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_prints',
             'prints_display': prints}
+
+
+@view_config(route_name='browse_designs', renderer='templates/browse_designs.jinja2')
+def browse_designs_view(req: Request):
+    is_logged_in = verify_user_token(req)
+
+    designs = list(DBSession.query.order_by(m.DesignPost.date_created.desc()))
+
+    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_designs',
+            'designs_display': designs}
+
+
+# @view_config(route_name='register_doc', renderer='templates/register_doctor.jinja2')
 
 
 # This snippet is for viewing a particular print, I wrote it in the wrong location, so I'm leaving it here for later
