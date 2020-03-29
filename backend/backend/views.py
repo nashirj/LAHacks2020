@@ -268,7 +268,7 @@ def submit_print(req: Request):
     post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
     num_parts = data.get('num_items')
-    date_completed = data.get('completion-date')
+    date_completed = StrToDate(data.get('completion-date'))
 
     if num_parts and date_completed:
         new_print_submission = m.PrintCommitment("", num_parts, date_completed, req.session['uname'], post)
