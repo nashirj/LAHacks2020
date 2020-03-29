@@ -398,10 +398,14 @@ def submit_design_response_post(req: Request):
     post = DBSession.query(m.DesignPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
     body = data.get('print-notes')
-    files = data.get('files')
+    files_list = data.getall('files')
 
-    if body and files:
-        new_design_submission = m.DesignResponse(body, files, req.session['uname'], post)
+    file_path_list = []
+    if files_list:
+        file_path_list = store_file_view(files_list)
+
+    if body and file_path_list:
+        new_design_submission = m.DesignResponse(body, file_path_list, req.session['uname'], post)
 
         DBSession.add(new_design_submission)
         DBSession.commit()
@@ -433,11 +437,16 @@ def create_print_request_post(req: Request):
     data = req.POST
     title = data.get('title')
     body = data.get('print-notes')
-    files = data.get('files')
     num_parts = data.get('num_parts')
+    date_needed = data.get('completion-date')
+    files_list = data.getall('files')
 
-    if title and body and files and num_parts:
-        new_print_request = m.PrintPost(title, body, files, user, datetime.datetime.now(), num_parts)
+    file_path_list = []
+    if files_list:
+        file_path_list = store_file_view(files_list)
+
+    if title and body and file_path_list and num_parts and date_needed:
+        new_print_request = m.PrintPost(title, body, file_path_list, user, date_needed, num_parts)
 
         DBSession.add(new_print_request)
         DBSession.commit()
@@ -470,10 +479,14 @@ def create_design_request_post(req: Request):
     data = req.POST
     title = data['title']
     body = data['body']
-    files = data['files']
+    files_list = data.getall('files')
 
-    if data and title and body and files:
-        new_design_request = m.DesignPost(title, body, files, user, datetime.datetime.now())
+    file_path_list = []
+    if files_list:
+        file_path_list = store_file_view(files_list)
+
+    if data and title and body and file_path_list:
+        new_design_request = m.DesignPost(title, body, file_path_list, user, datetime.datetime.now())
 
         DBSession.add(new_design_request)
         DBSession.commit()
