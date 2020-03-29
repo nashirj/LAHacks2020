@@ -1,0 +1,34 @@
+{% extends "base_layout.jinja2" %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-3 col-md-offset-3">
+                <button onclick="location.href = '/design/new';" type="button"
+                        class="mt-auto btn btn-block btn-primary">Make a design request
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button onclick="location.href = '/print/new';" type="button"
+                        class="mt-auto btn btn-block btn-primary">Make a print request
+                </button>
+            </div>
+        </div>  <!-- row.// -->
+    </div> <!--container end.//-->
+
+    <div class="container">
+        {% for print in prints %}
+            <div class="container card-border">
+            <div class="card">
+                <div class="card-body text-dark">
+                    <h2 class="card-title"><a href="/print/view/{{ print['uid'] }}">{{ print['title'] }}</a></h2>
+                    <h5>{{ print['author'] }} | {{ print['hospital'] }}</h5>
+                    <h5>Created: {{ print['date_created'] }}</h5>
+                    <h5>Needed by: {{ print['date_needed'] }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
