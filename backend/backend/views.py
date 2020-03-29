@@ -96,7 +96,7 @@ def profile_view(req: Request):
             print_reqs.append({
                 'title': prnt.title,
                 'desc': prnt.body,
-                'image': prnt.get_files()[0],
+                # 'image': prnt.get_files()[0],
                 'uid': prnt.post_id,
                 'date': prnt.date_created
             })
@@ -258,8 +258,8 @@ def register_doctor_post(req: Request):
 
     if uname and passwd and email and fname and lname and country and state and city and hospital and alma_mater \
             and spec and bio:
-        new_doctor = m.DoctorUser(uname, passwd, email, fname, lname, country, state, city, hospital, alma_mater,
-                                  spec, bio, '/static/profile_default.png')
+        new_doctor = m.DoctorUser(uname, passwd, email, fname, lname, bio, country, state, city, hospital, alma_mater,
+                                  spec, '/static/profile_default.png')
         dbs.add(new_doctor)
         new_token = new_doctor.refresh_session()
         transaction.manager.commit()
