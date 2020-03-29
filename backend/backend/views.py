@@ -171,7 +171,7 @@ def view_print(req: Request):
     is_doctor = False
     is_post_owner = False
 
-    post = DBSession.query(m.PrintPost).filter_by(req.matchdict['post_id']).first()
+    post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
 
     post_info = {
         'title': post.title,
@@ -223,7 +223,7 @@ def view_design(req: Request):
     is_doctor = False
     is_post_owner = False
 
-    post = DBSession.query(m.DesignPost).filter_by(req.matchdict['post_id']).first()
+    post = DBSession.query(m.DesignPost).filter_by(post_id=req.matchdict['post_id']).first()
 
     post_info = {
         'title': post.title,
@@ -271,7 +271,7 @@ def submit_print(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
-    post = DBSession.query(m.PrintPost).filter_by(req.matchdict['post_id']).first()
+    post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
     num_parts = data.get('num-items')
     date_completed = data.get('completion-date')
@@ -292,7 +292,7 @@ def submit_design(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
-    post = DBSession.query(m.DesignPost).filter_by(req.matchdict['post_id']).first()
+    post = DBSession.query(m.DesignPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
     body = data.get('print-notes')
     files = data.get('files')
