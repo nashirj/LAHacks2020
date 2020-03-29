@@ -304,9 +304,9 @@ def register_fab_post(req: Request):
         new_fab = m.FabUser(uname, passwd, email, fname, lname, country, state, city, printer_model, print_quality)
         dbs = DBSession()
         dbs.add(new_fab)
-        transaction.manager.commit()
-
         new_token = new_fab.refresh_session()
+        transaction.manager.commit()
+        
         req.session['uname'] = uname
         req.session['session_token'] = new_token
 
@@ -373,7 +373,7 @@ def view_print(req: Request):
             'needed': post.num_parts_needed,
             'completed': num_parts_completed,
             'in_progress': num_parts_in_progress,
-            'not_started': (post.num_parts_needed - num_parts_in_progress - num_parts_completed)
+            'not_started': (int(post.num_parts_needed) - num_parts_in_progress - num_parts_completed)
         }
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'view_print',
