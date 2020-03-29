@@ -27,6 +27,16 @@
       <article class="card-body">
         <form>
           <div class="form-group">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- change this to a dynamic thing that lets user select from repo -->
+                <label>Title</label>
+                <input id="design" class="form-control" type="text"></input>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
             <div class="row text-left">
               <div class="col-md-12">
                 <label for="comment">Brief description (include links to references if applicable)</label>
@@ -68,18 +78,13 @@
           
           <div class="form-group">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <!-- change this to a dynamic thing that lets user select from repo -->
                 <label for="comment">Keywords</label>
                 <input name="" class="form-control" placeholder="urgent, disposable, etc" type="text">
               </div>
               
-              <div class="col-md-4">
-                <label>Number of items needed</label>
-                <input id="num-items" class="form-control" placeholder="#" type="text"></input>
-              </div>
-
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <!-- space separate keywords -->
                 <label>Date needed by</label>
                 <input name="completion-date" class="form-control" placeholder="YYYY-MM-DD" type="date">
