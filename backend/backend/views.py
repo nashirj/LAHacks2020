@@ -1,4 +1,4 @@
-from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed, HTTPBadRequest
 from pyramid.view import view_config
 from pyramid.request import Request
 from sqlalchemy import func
@@ -81,21 +81,43 @@ def browse_designs_view(req: Request):
 
     designs = list(DBSession.query.order_by(m.DesignPost.date_created.desc()))
 
-    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_designs',
+    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'Browse Designs',
             'designs_display': designs}
 
 
-@view_config(route_name='register_doctor', renderer='templates/register_doctor.jinja2')
+@view_config(route_name='register_doctor')
 def register_doctor(req: Request):
-    new_doctor = m.DoctorUser(req.params['uname'], req.params['password'], req.params['email'], req.params['fname'],
-                              req.params['lname'], req.params['country'], req.params['state'], req.params['city'],
-                              req.params['hospital'], req.params['alma mater'], req.params['specialization'],
-                              req.params['bio'])
+    if req.method != 'POST':
+        return HTTPMethodNotAllowed("This route only valid for POST request")
 
-    DBSession.add(new_doctor)
-    DBSession.commit()
+    data = req.POST
+    uname = data.get('uname')
+    passwd = data.get('password')
+    email = data.get('email')
+    fname = data.get('fname')
+    lname = data.get('lname')
+    country = data.get('country')
+    state = data.get('state')
+    city = data.get('city')
+    hospital = data.get('hospital')
+    alma_mater = data.get('alma_mater')
+    spec = data.get('specialization')
+    bio = data.get('bio')
 
-    # TODO: Return something here
+    if uname and passwd and email and fname and lname and country and state and city and hospital and alma_mater \
+            and spec and bio:
+        new_doctor = m.DoctorUser(uname, passwd, email, fname, lname, country, state, city, hospital, alma_mater,
+                                  spec, bio)
+        DBSession.add(new_doctor)
+        DBSession.commit()
+
+        new_token = new_doctor.refresh_session()
+        req.session['uname'] = uname
+        req.session['session_token'] = new_token
+
+        return HTTPFound(req.params.get('return', '/'))
+    else:
+        return HTTPBadRequest("Malformed request")
 
 
 @view_config(route_name='register_fab', renderer='templates/register_fab.jinja2')
