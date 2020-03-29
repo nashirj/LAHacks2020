@@ -1,114 +1,116 @@
-{% extends base_layout.jinja2 %}
+{% extends "base_layout.jinja2" %}
 
 {% block content %}
-<div class="container">
-  <div class="row text-center">
-    <!-- Description
-    Measurements (if applicable)
-    i.e. if it needs to interface with an existing device
-    Date needed by (YYYY-MM-DD)
-    Pictures
-    Hashtags
-    -->
-    <h3>Make a design request</h3>
-  </div>
-  <div class="row">
-    <div class="card">
-      <article class="card-body">
-        <form action="/store_file_view" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-            <div class="form-group">
-            <div class="row">
-              <div class="col-md-12">
-                <!-- change this to a dynamic thing that lets user select from repo -->
-                <label>Title</label>
-                <input name="title" id="design" class="form-control" type="text"/>
-              </div>
+    <div class="container">
+        <div class="row text-center">
+            <!-- Description
+            Measurements (if applicable)
+            i.e. if it needs to interface with an existing device
+            Date needed by (YYYY-MM-DD)
+            Pictures
+            Hashtags
+            -->
+            <h3>Make a design request</h3>
+        </div>
+        <div class="row">
+            <div class="card">
+                <article class="card-body">
+                    <form action="/design/new/post" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- change this to a dynamic thing that lets user select from repo -->
+                                    <label>Title</label>
+                                    <input name="title" id="design" class="form-control" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row text-left">
+                                <div class="col-md-12">
+                                    <label for="comment">Brief description (include links to references if
+                                        applicable)</label>
+                                    <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Reference image (if applicable)</label>
+                                    <input name="files" type="file" class="form-control-file" id="exampleInputFile"
+                                           aria-describedby="fileHelp">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row text-left">
+                                <div class="col-md-12">
+                                    <label>Does this interface with an existing piece of equipment?</label>
+                                </div>
+                            </div>
+                            <div class="row text-left">
+                                <div class="col-md-12">
+                                    <select class="form-control" id="displayMeasurements">
+                                        <option value="0"></option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div id="measurements"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- change this to a dynamic thing that lets user select from repo -->
+                                    <label for="comment">Keywords</label>
+                                    <input name="" class="form-control" placeholder="urgent, disposable, etc"
+                                           type="text">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Number of items needed</label>
+                                    <input id="num-items" class="form-control" placeholder="#" type="text"></input>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <!-- space separate keywords -->
+                                    <label>Date needed by</label>
+                                    <input name="completion-date" class="form-control" placeholder="YYYY-MM-DD"
+                                           type="date">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row text-center">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </article>
             </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row text-left">
-              <div class="col-md-12">
-                <label for="comment">Brief description (include links to references if applicable)</label>
-                <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                  <label for="exampleInputFile">Reference image (if applicable)</label>
-                  <input name="files" type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                </div>
-              </div>
-            </div>
-          </form>
-
-          <form>
-          <div class="form-group">
-            <div class="row text-left">
-              <div class="col-md-12">
-                <label>Does this interface with an existing piece of equipment?</label>
-              </div>
-            </div>
-            <div class="row text-left">
-              <div class="col-md-12">
-                <select class="form-control" id="displayMeasurements">
-                   <option value="0"></option>
-                   <option value="Yes">Yes</option>
-                   <option value="No">No</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div id="measurements"></div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-4">
-                <!-- change this to a dynamic thing that lets user select from repo -->
-                <label for="comment">Keywords</label>
-                <input name="" class="form-control" placeholder="urgent, disposable, etc" type="text">
-              </div>
-
-              <div class="col-md-4">
-                <label>Number of items needed</label>
-                <input id="num-items" class="form-control" placeholder="#" type="text"></input>
-              </div>
-
-              <div class="col-md-4">
-                <!-- space separate keywords -->
-                <label>Date needed by</label>
-                <input name="completion-date" class="form-control" placeholder="YYYY-MM-DD" type="date">
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row text-center">
-              <div class="col-md-12">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </article>
+        </div>
     </div>
-  </div>
-</div>
 
-<script>
-  $('#displayMeasurements').change(function() {
-    opt = $(this).val();
-    if (opt=="Yes") {
-        $('#measurements').html('<div class="row"><div class="col-md-12"><label>Description of existing equipment</label><input class="form-control" type="date" placeholder="Description of existing equipment" id="example-date-input"></div></div>');
-    } else {
-        $('#measurements').html('');
-    }
-});
-</script>
+    <script>
+        $('#displayMeasurements').change(function () {
+            opt = $(this).val();
+            if (opt == "Yes") {
+                $('#measurements').html('<div class="row"><div class="col-md-12"><label>Description of existing equipment</label><input class="form-control" type="date" placeholder="Description of existing equipment" id="example-date-input"></div></div>');
+            } else {
+                $('#measurements').html('');
+            }
+        });
+    </script>
 {% endblock content %}

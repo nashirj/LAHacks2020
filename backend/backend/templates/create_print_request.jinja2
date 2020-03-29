@@ -1,4 +1,4 @@
-{% extends base_layout.jinja2 %}
+{% extends "base_layout.jinja2" %}
 
 {% block content %}
 <div class="container top-buffer">
@@ -15,7 +15,7 @@
   <div class="row">
     <div class="card">
       <article class="card-body">
-        <form action="/store_file_view" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <form action="/print/new/post" method="post" accept-charset="utf-8" enctype="multipart/form-data">
           <div class="form-group">
             <div class="row">
               <div class="col-md-12">
