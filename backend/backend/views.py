@@ -175,7 +175,9 @@ def browse_prints_view(req: Request):
                     'body': post.body,
                     'author': post.author_uname,
                     'hospital': doc.hospital,
-                    'files': post.get_files()
+                    'files': post.get_files(),
+                    'date_created': post.date_created,
+                    'date_needed': post.date_needed
                 })
     else:
         # TODO: fix this later, temporary code only displays one doctor's posts if not logged in
@@ -218,7 +220,7 @@ def browse_designs_view(req: Request):
             'hospital': design.author.hospital,
             'files': design.get_files(),
             'date_created': str(design.date_created),
-            'date_needed': str(design.date_need)
+            'date_needed': str(design.date_needed)
         })
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'browse_designs',
@@ -306,7 +308,7 @@ def register_fab_post(req: Request):
         dbs.add(new_fab)
         new_token = new_fab.refresh_session()
         transaction.manager.commit()
-        
+
         req.session['uname'] = uname
         req.session['session_token'] = new_token
 
@@ -373,7 +375,7 @@ def view_print(req: Request):
             'needed': post.num_parts_needed,
             'completed': num_parts_completed,
             'in_progress': num_parts_in_progress,
-            'not_started': (int(post.num_parts_needed) - num_parts_in_progress - num_parts_completed)
+            'not_started': (post.num_parts_needed - num_parts_in_progress - num_parts_completed)
         }
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'view_print',
@@ -546,7 +548,7 @@ def create_design_request_post(req: Request):
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname'))
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname')).first()
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
     data = req.POST
@@ -554,12 +556,12 @@ def create_design_request_post(req: Request):
     body = data['body']
     files_list = data.getall('files')
 
-    file_path_list = []
-    if files_list:
-        file_path_list = store_file_view(files_list)
+    # file_path_list = []
+    # if files_list:
+    #     file_path_list = store_file_view(files_list)
 
-    if data and title and body and file_path_list:
-        new_design_request = m.DesignPost(title, body, file_path_list, user, datetime.datetime.now())
+    if data and title and body:
+        new_design_request = m.DesignPost(title, body, [], user, datetime.datetime.now())
 
         DBSession.add(new_design_request)
         transaction.manager.commit()
