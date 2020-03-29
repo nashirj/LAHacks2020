@@ -1,4 +1,4 @@
-from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed, HTTPBadRequest
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed, HTTPBadRequest, HTTPUnauthorized
 from pyramid.view import view_config
 from pyramid.request import Request
 from sqlalchemy import func
@@ -254,6 +254,16 @@ def view_design(req: Request):
     return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'view_print',
             'hospital': post.author.hospital, 'post': post_info, 'responses': responses,
             'is_doctor': is_doctor, 'is_post_owner': is_post_owner}
+
+
+@view_config(route_name='submit_print_page', renderer='templates/submit_print.jinja2')
+def submit_print_page(req: Request):
+    is_logged_in = verify_user_token(req)
+    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    if not is_logged_in or not user:
+        return HTTPUnauthorized("You must be logged in to view this page")
+
+    return {'is_logged_in': is_logged_in, 'user_name': user.username}
 
 
 @view_config(route_name='submit_print')
