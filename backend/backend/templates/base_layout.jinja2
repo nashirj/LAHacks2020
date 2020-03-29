@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>$(TITLE)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- TODO: figure out how to add header padding -->
+<div class="container">
+    <div class="row row-bordered">
+        <div class="col-sm-4">
+            <h2><a>$(TITLE)</a></h2>
+        </div>
+        <div class="col-sm-4 text-right">
+            <!-- this directs back to user profile -->
+            {% if is_logged_in %}
+                <h2><a href="/user/{{ user_name }}">My profile</a></h2>
+            {% else %}
+                <div class="col-sm-5 text-right">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-5 text-left">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                <label>Password</label>
+                            </div>
+                            <div class="col-sm-4 text-right">
+                                <a class="float-right text-right" href="#">Forgot password?</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5 text-left">
+                                <input name="" class="form-control" placeholder="user@domain.com" type="email">
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                <input name="" class="form-control" placeholder="******" type="password">
+                            </div>
+                            <div class="col-sm-3 text-right">
+                                <button type="button" class="mt-auto btn btn-block btn-primary">Log in</button>
+                            </div>
+                        </div>
+                    </div> <!-- row.// -->
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="sidenav">
+        <a href="/">About</a>
+        <a href="/register">Register</a>
+        <a href="/print/browse">Printing</a>
+        <a href="/design/browse">Designing</a>
+    </div>
+</div>
+
+<div class="container">
+    {% block content %}
+        <p>No content</p>
+    {% endblock content %}
+</div>
+
+</body>
+</html>

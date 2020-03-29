@@ -1,6 +1,7 @@
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed
 from pyramid.view import view_config
 from pyramid.request import Request
+from sqlalchemy import func
 
 import backend.db_models as m
 from backend.db_models import DBSession
@@ -44,28 +45,69 @@ def browse_prints_view(req: Request):
                                                                             geo_location_state=user_loc_data['state'],
                                                                             geo_location_city=user_loc_data['city']))
         for doc in doctors_matching_loc:
-            for post in doc.design_posts:
+            for post in doc.print_posts:
                 responses = []
 
                 prints.append({
                     'title': post.title,
+                    'uid': post.post_id,
                     'body': post.body,
                     'author': post.author_uname,
+                    'hospital': doc.hospital,
                     'files': post.get_files()
                 })
     else:
         # TODO: fix this later, temporary code only displays one doctor's posts if not logged in
-        posts = DBSession.query(m.DoctorUser).first().posts
+        doc = DBSession.query(m.DoctorUser).first()
+        posts = doc.print_posts
         for post in posts:
             prints.append({
                 'title': post.title,
+                'uid': post.post_id,
                 'body': post.body,
                 'author': post.author_uname,
-                'files': post.get_files()
+                'files': post.get_files(),
+                'date_created': str(post.date_created),
+                'date_needed': str(post.date_needed)
             })
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_prints',
             'prints_display': prints}
+
+
+@view_config(route_name='browse_designs', renderer='templates/browse_designs.jinja2')
+def browse_designs_view(req: Request):
+    is_logged_in = verify_user_token(req)
+
+    designs = list(DBSession.query.order_by(m.DesignPost.date_created.desc()))
+
+    return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'browse_designs',
+            'designs_display': designs}
+
+
+@view_config(route_name='register_doctor', renderer='templates/register_doctor.jinja2')
+def register_doctor(req: Request):
+    new_doctor = m.DoctorUser(req.params['uname'], req.params['password'], req.params['email'], req.params['fname'],
+                              req.params['lname'], req.params['country'], req.params['state'], req.params['city'],
+                              req.params['hospital'], req.params['alma mater'], req.params['specialization'],
+                              req.params['bio'])
+
+    DBSession.add(new_doctor)
+    DBSession.commit()
+
+    # TODO: Return something here
+
+
+@view_config(route_name='register_fab', renderer='templates/register_fab.jinja2')
+def register_rab(req: Request):
+    new_fab = m.FabUser(req.params['uname'], req.params['password'], req.params['email'], req.params['fname'],
+                        req.params['lname'], req.params['country'], req.params['state'], req.params['city'],
+                        req.params['printer model'], req.params['print quality'])
+
+    DBSession.add(new_fab)
+    DBSession.commit()
+
+    # TODO: Return something here
 
 
 # This snippet is for viewing a particular print, I wrote it in the wrong location, so I'm leaving it here for later
