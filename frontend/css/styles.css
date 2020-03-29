@@ -68,6 +68,17 @@ body {
 .card-border {
   border-style: solid;
   margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.verified-box {
+  float: left;
+  width: 100px;
+  height: 20px;
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .request-border {

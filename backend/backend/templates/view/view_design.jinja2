@@ -1,0 +1,67 @@
+{% extends base_layout.jinja2 %}
+
+{% block content %}
+<div class="container">
+  <row class="text-center">
+      <h2>{{ post['title'] }}</h2>
+      <h5>{{ post['author'] }} | {{ hospital }}</h5>
+      <h5>Created: {{ post['date_created'] }}</h5>
+      <h5>Needed by: {{ post['date_needed'] }}</h5>
+
+      <div class="container">
+        <h3>Description:</h3>
+        <p>{{ post['body'] }}</p>
+      </div>
+
+{#      TODO: Add measuremeants? Or leave as part of description? #}
+{#      <div class="container">#}
+{#        <h3>Measurements: </h3>#}
+{#        <h5></h5>#}
+{#        <h5></h5>#}
+{#      </div>#}
+
+{#      <div class="container">#}
+{#        <h3>Images: </h3>#}
+{#        <img src="#" alt="Thing" width="200" height="80" />#}
+{#      </div>#}
+
+      {% if not is_doctor %}
+          <div class="row justify-content-md-center">
+            <div class="col-sm-4 col-md-offset-4">
+              <button onclick="location.href = '#';" type="button" class="mt-auto btn btn-block btn-primary">Submit Design</button>
+            </div>
+          </div>
+      {% endif %}
+
+      <div class="container">
+        <h3>Current/Past Designers:</h3>
+      </div>
+  </row>
+</div> <!--container end.//-->
+
+<div class="container">
+    {% for resp in responses %}
+        <div class="container card-border">
+            <div class="card">
+                <div class="card-body text-dark">
+                    <h3 class="card-title"><a href="#">{{ resp['author'] }}</a></h3>
+                    <h5>Los Angeles</h5>
+                    <h5>Started on: {{ resp['date_created'] }}</h5>
+                </div>
+            </div>
+
+        {% if resp['is_accepted_response'] %}
+            <div class="container">
+                <div class="container verified-box">Verified</div>
+            </div>
+        {% else if is_doctor %}
+            <div class="form-group">
+                <button class="btn btn-primary btn-lg pull-right" type="submit">
+                    Verify
+                </button>
+            </div>
+        {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
