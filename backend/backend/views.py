@@ -171,7 +171,7 @@ def view_print(req: Request):
     is_doctor = False
     is_post_owner = False
 
-    post = DBSession.query(m.PrintPost).filter_by(req.matchdict['post_id']).first()
+    post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
 
     post_info = {
         'title': post.title,
@@ -223,7 +223,7 @@ def view_design(req: Request):
     is_doctor = False
     is_post_owner = False
 
-    post = DBSession.query(m.DesignPost).filter_by(req.matchdict['post_id']).first()
+    post = DBSession.query(m.DesignPost).filter_by(post_id=req.matchdict['post_id']).first()
 
     post_info = {
         'title': post.title,
@@ -256,12 +256,45 @@ def view_design(req: Request):
             'is_doctor': is_doctor, 'is_post_owner': is_post_owner}
 
 
-# @view_config(route_name='submit_print')
-# def submit_print(req: Request):
-#     if req.method != 'POST':
-#         return HTTPMethodNotAllowed("This route only valid for POST request")
-#
-#     post = DBSession.query(m.DesignPost).filter_by(req.matchdict['post_id']).first()
-#     data = req.POST
+@view_config(route_name='submit_print')
+def submit_print(req: Request):
+    if req.method != 'POST':
+        return HTTPMethodNotAllowed("This route only valid for POST request")
+
+    post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
+    data = req.POST
+    num_parts = data.get('num-items')
+    date_completed = data.get('completion-date')
+
+    if num_parts and date_completed:
+        new_print_submission = m.PrintCommitment("", num_parts, date_completed, req.session['uname'], post)
+
+        DBSession.add(new_print_submission)
+        DBSession.commit()
+
+        return HTTPFound(req.params.get('return', '/'))
+    else:
+        return HTTPBadRequest("Malformed request")
+
+
+@view_config(route_name='submit_design')
+def submit_design(req: Request):
+    if req.method != 'POST':
+        return HTTPMethodNotAllowed("This route only valid for POST request")
+
+    post = DBSession.query(m.DesignPost).filter_by(post_id=req.matchdict['post_id']).first()
+    data = req.POST
+    body = data.get('print-notes')
+    files = data.get('files')
+
+    if body and files:
+        new_design_submission = m.DesignResponse(body, files, req.session['uname'], post)
+
+        DBSession.add(new_design_submission)
+        DBSession.commit()
+
+        return HTTPFound(req.params.get('return', '/'))
+    else:
+        return HTTPBadRequest("Malformed request")
 
 

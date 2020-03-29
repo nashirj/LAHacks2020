@@ -1,0 +1,46 @@
+<div class="container">
+    <row class="text-center">
+        <h2>{{ post['title'] }}</h2>
+        <h5>{{ post['author'] }} | {{ hospital }}</h5>
+        <h5>Created: {{ post['date_created'] }} </h5>
+        <h5>Needed by: {{ post['date_needed'] }} </h5>
+
+        <div class="container">
+            <h4>Total Parts Needed: {{ parts_num_info['needed'] }}</h4>
+            <h5>Parts completed: {{ parts_num_info['completed'] }}</h5>
+            <h5>Parts in progress: {{ parts_num_info['in_progress'] }}</h5>
+            <h5>Parts not started: {{ parts_num_info['not_started'] }}</h5>
+        </div>
+
+        <div class="container">
+            <h3>Part: <a href="#">link to stl in repo</a></h3>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div class="col-sm-4 col-md-offset-4">
+                <button onclick="location.href = '#';" type="button" class="mt-auto btn btn-block btn-primary">Print
+                    this
+                </button>
+            </div>
+        </div>
+
+        <div class="container">
+            <h3>Current/Past Fabricators:</h3>
+        </div>
+    </row>
+</div>
+
+<div class="container">
+    {% for commitment in commitments %}
+        <div class="container card-border">
+            <div class="card">
+                <div class="card-body text-dark">
+                    <h3 class="card-title"><a href="#">{{ commitment['author'] }}</a></h3>
+                    <h5>Los Angeles</h5>
+                    <h5>Started on: {{ commitment['date_created'] }}</h5>
+                    <h5>Parts in progress: {{ commitment['num_copies'] }}</h5>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

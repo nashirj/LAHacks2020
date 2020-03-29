@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d61ae692-28b4-421a-a4f0-fae92a71542f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="db" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZkMA1PCoZXo6Ob3W1NN9iFIFJV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.local/bin/aws" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Pyramid server.backend">
+    <configuration name="browse_prints.jinja2" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/backend/backend/templates/browse_prints.jinja2" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/setup.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="backend" type="Python.PyramidServer" factoryName="Pyramid server">
+      <module name="backend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="CONFIGURATION_FILE" value="$PROJECT_DIR$/development.ini" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in setup.py" type="tests" factoryName="Unittests">
+      <module name="backend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/setup.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.browse_prints.jinja2" />
+        <item itemvalue="Python.setup" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d61ae692-28b4-421a-a4f0-fae92a71542f" name="Default Changelist" comment="" />
+      <created>1585378491583</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585378491583</updated>
+      <workItem from="1585378498471" duration="1073000" />
+      <workItem from="1585379583029" duration="35332000" />
+      <workItem from="1585454191015" duration="3839000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2479" y="200" key="#Vim_Emulation" timestamp="1585453769187">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2479" y="200" key="#Vim_Emulation/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585453769187" />
+    <state x="423" y="215" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585454722218">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state x="423" y="215" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.22.1920.1058@0.22.1920.1058" timestamp="1585454722218" />
+    <state x="2343" y="197" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585379614754" />
+    <state x="2667" y="297" key="FileChooserDialogImpl" timestamp="1585428730331">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2667" y="297" key="FileChooserDialogImpl/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585428730331" />
+    <state width="1874" height="277" key="GridCell.Tab.0.bottom" timestamp="1585453040357">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="277" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585453040357" />
+    <state width="1874" height="277" key="GridCell.Tab.0.center" timestamp="1585453040357">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="277" key="GridCell.Tab.0.center/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585453040357" />
+    <state width="1874" height="277" key="GridCell.Tab.0.left" timestamp="1585453040357">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="277" key="GridCell.Tab.0.left/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585453040357" />
+    <state width="1874" height="277" key="GridCell.Tab.0.right" timestamp="1585453040357">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="277" key="GridCell.Tab.0.right/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585453040357" />
+    <state width="1874" height="344" key="GridCell.Tab.1.bottom" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="1874" height="344" key="GridCell.Tab.1.center" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.1.center/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="1874" height="344" key="GridCell.Tab.1.left" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.1.left/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="1874" height="344" key="GridCell.Tab.1.right" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.1.right/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="1874" height="344" key="GridCell.Tab.2.bottom" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.2.bottom/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="1874" height="344" key="GridCell.Tab.2.center" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.2.center/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="1874" height="344" key="GridCell.Tab.2.left" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.2.left/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="1874" height="344" key="GridCell.Tab.2.right" timestamp="1585440853412">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1874" height="344" key="GridCell.Tab.2.right/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585440853412" />
+    <state width="263" height="541" key="HiddenNamespacesPopup" timestamp="1585429636573">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="263" height="541" key="HiddenNamespacesPopup/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585429636573" />
+    <state x="314" y="350" key="SettingsEditor" timestamp="1585454257454">
+      <screen x="0" y="22" width="1920" height="1058" />
+    </state>
+    <state x="314" y="350" key="SettingsEditor/0.22.1920.1058@0.22.1920.1058" timestamp="1585454257454" />
+    <state x="2234" y="335" key="SettingsEditor/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585453722431" />
+    <state x="2540" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1585453741011">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2540" y="367" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/0.24.1920.1056@1920.0.1920.1080" timestamp="1585453741011" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/backend$backend.coverage" NAME="backend Coverage Results" MODIFIED="1585452849557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/backend$setup.coverage" NAME="setup Coverage Results" MODIFIED="1585432772052" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
