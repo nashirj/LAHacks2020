@@ -4,6 +4,7 @@ backend/venv
 backend/.idea
 
 backend/backend/__pycache__
+db.sqlite
 
 frontend/Madeleine.js/
 
