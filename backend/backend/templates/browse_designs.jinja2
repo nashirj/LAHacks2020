@@ -2,6 +2,7 @@
 
 {% block content %}
     <br>
+    {% if is_doctor %}
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-sm-3 col-md-offset-3">
@@ -16,6 +17,7 @@
             </div>
         </div>  <!-- row.// -->
     </div> <!--container end.//-->
+    {% endif %}
 
     <div class="container">
         {% for print in prints %}
