@@ -47,13 +47,15 @@ def profile_view(req: Request):
 
     renderer = None
     query_data = {
-        'uname': query_user.username,
+        'profile_pic': query_user.profile_pic,
+        'username': query_user.username,
         'fname': query_user.first_name,
         'lname': query_user.last_name,
         'email': query_user.email,
         'country': query_user.geo_location_cntry,
         'state': query_user.geo_location_state,
-        'city': query_user.geo_location_city
+        'city': query_user.geo_location_city,
+        'bio': query_user.biography
     }
 
     if query_user._user_type == "doctor":
@@ -63,15 +65,35 @@ def profile_view(req: Request):
         query_data.update({
             'hospital': query_user.hospital,
             'alma_mater': query_user.alma_mater,
-            'specialization': query_user.specialization
+            'specialization': query_user.specialization,
         })
     else:
         query_user: m.FabUser = DBSession.query(m.FabUser).filter_by(username=query_uname)
         renderer = "templates/profiles/fab_profiles.jinja2"
 
+        designs = []
+        for design in query_user.design_responses:
+            designs.append({
+                'title': design.parent_post.title,
+                'date': design.date_created,
+                'desc': design.body,
+                'image': design.get_files()[0]
+            })
+
+        prints = []
+        for print in query_user.print_commitments:
+            prints.append({
+                'title': print.parent_post.title,
+                'date': print.date_created,
+                'desc': print.body,
+                'image': print.get_files()[0]
+            })
+
         query_data.update({
             'fab_capabilities': query_user.printer_model,
-            'expected_quality': query_user.print_quality_capable
+            'expected_quality': query_user.print_quality_capable,
+            'designs': designs,
+            'prints': prints
         })
 
     render_to_response(renderer, {
@@ -79,7 +101,6 @@ def profile_view(req: Request):
         'user_name': uname,
         'query_user_data': query_data
     }, req)
-
 
 
 @view_config(route_name='browse_prints', renderer='templates/browse/browse_prints.jinja2')

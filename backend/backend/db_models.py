@@ -23,10 +23,13 @@ class AbstractUser(Base):
     email = Column(String(75))
     first_name = Column(String(75))
     last_name = Column(String(75))
+    biography = Column(Text)
 
     geo_location_cntry = Column(String(75))
     geo_location_state = Column(String(75))
     geo_location_city = Column(String(75))
+
+    profile_pic = Column(String(75))
 
     _password_hash = Column(Text)
     _session_token_hash = Column(Text)
@@ -40,11 +43,14 @@ class AbstractUser(Base):
     }
 
     def __init__(self, uname: T.AnyStr, password: T.AnyStr, email: T.AnyStr, fname: T.AnyStr, lname: T.AnyStr,
-                 geo_country: T.AnyStr, geo_state: T.AnyStr, geo_city: T.AnyStr, user_type: T.AnyStr):
+                 bio: T.AnyStr, geo_country: T.AnyStr, geo_state: T.AnyStr, geo_city: T.AnyStr, user_type: T.AnyStr,
+                 profile_pic: T.AnyStr):
         self.username = uname
+        self.profile_pic = profile_pic
         self.email = email
         self.first_name = fname
         self.last_name = lname
+        self.biography = bio
 
         self.geo_location_cntry = geo_country
         self.geo_location_state = geo_state
@@ -89,7 +95,6 @@ class DoctorUser(AbstractUser):
 
     alma_mater = Column(String(75))
     specialization = Column(String(75))
-    biography = Column(Text)
 
     design_posts = relationship("DesignPost", back_populates="author", uselist=True)
     print_posts = relationship("PrintPost", back_populates="author", uselist=True)
@@ -112,7 +117,6 @@ class DoctorUser(AbstractUser):
 
 class FabUser(AbstractUser):
     username = Column(Text, ForeignKey("user.username"), primary_key=True)
-    hospital = Column(Text)
 
     design_responses = relationship("DesignResponse", back_populates="author", uselist=True)
     print_commitments = relationship("PrintCommitment", back_populates="author", uselist=True)
@@ -205,6 +209,10 @@ class DesignResponse(Base):
     def load_files(self):
         self.files = json.loads(self._files_json)['files']
 
+    def get_files(self):
+        self.load_files()
+        return self.files
+
 
 class PrintPost(Base):
     post_id = Column(String(32), primary_key=True)
@@ -256,6 +264,9 @@ class PrintCommitment(Base):
     is_verified_recv = Column(Boolean)
     date_created = Column(Date)
 
+    _files_json = Column(Text)
+    files = list()
+
     author_uname = Column(String(75), ForeignKey("fabricator.username"))
     author = relationship("FabUser", back_populates="print_commitments")
 
@@ -264,14 +275,24 @@ class PrintCommitment(Base):
 
     __tablename__ = "print_commitments"
 
-    def __init__(self, body: T.AnyStr, num_copies: int, est_time_days: int, author: FabUser, parent: PrintPost):
+    def __init__(self, body: T.AnyStr, num_copies: int, est_time_days: int, files: list, author: FabUser,
+                 parent: PrintPost):
         self.body = body
         self.num_copies = num_copies
         self.est_time_days = est_time_days
         self.author = author
         self.parent_post = parent
 
+        self.files = files
+        self._files_json = json.dumps({'files': self.files})
+
         self.date_created = datetime.datetime.now()
 
         self.resp_id = uuid.uuid4().hex
 
+    def load_files(self):
+        self.files = json.loads(self._files_json)['files']
+
+    def get_files(self):
+        self.load_files()
+        return self.files
