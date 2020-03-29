@@ -98,3 +98,20 @@ body {
 .top-buffer { margin-top:20px; }
 
 .left-buffer p { padding-left:10px; }
+
+.right-buffer p { padding-right:10px; }
+
+/* Style buttons */
+.download-btn {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Darker background on mouse-over */
+.download-btn:hover {
+  background-color: RoyalBlue;
+}

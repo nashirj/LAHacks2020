@@ -1,186 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>$(TITLE) — Design repository</title>
+  <title>$(TITLE) — Create design request</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
-  <link href="../css/profile.css" type="text/css" rel="stylesheet"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- icons library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="../css/lightbox.css" type="text/css" rel="stylesheet"/>
+  <script src="../js/lightbox.js"></script>
 </head>
 <body>
 
-<div class="container top-buffer">
-  <div class="row bottom-buffer">
-    <div class="col-md-3 col-md-offset-1">
-      <div class="row text-center border-primary">
-        <div class="card" style="width: 30rem;">
-          <div class="text-left left-buffer">
-            <p>Designed by: <a href="profile_fab.html">$(designer)</a></p>
-            <p>Accepted by: <a href="profile_fab.html">$(doctor)</a></p>
-          </div>
-          <div class="row">
-            <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
-          </div>
-          <div class="row">
-            <div class="card-body">
-              <h5 class="card-title">$(design_title), submitted on $(date)</h5>
-              <p class="card-text">Description of the design request</p>
-              <!-- TODO: show request if there is not an accepted solution -->
-              <a href="design_request.html" class="btn btn-primary">View request details</a>
+<div class="container emp-profile top-buffer">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row text-center bottom-buffer">
+                <div class="card">
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <div class="text-left left-buffer">
+                                <p>Designed by: <a href="profile_fab.html">$(designer)</a></p>
+                                <p>Accepted by: <a href="profile_fab.html">$(doctor)</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-right right-buffer">
+                                <p>Submitted on: $(submit_date)</a></p>
+                                <p>Accepted on: $(accept_date)</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <img src="../imgs/demomain.png" style="width:50%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                    </div>
+                    <div class="row text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">$(design_title)</h5>
+                            <p class="card-text">$(design_description)</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            
         </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 col-md-offset-1">
-      <div class="row text-center border-primary">
-        <div class="card" style="width: 30rem;">
-          <div class="text-left left-buffer">
-            <p>Designed by: <a href="profile_fab.html">$(designer)</a></p>
-            <p>Accepted by: <a href="profile_fab.html">$(doctor)</a></p>
-          </div>
-          <div class="row">
-            <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
-          </div>
-          <div class="row">
-            <div class="card-body">
-              <h5 class="card-title">$(design_title), submitted on $(date)</h5>
-              <p class="card-text">Description of the design request</p>
-              <!-- TODO: show request if there is not an accepted solution -->
-              <a href="design_request.html" class="btn btn-primary">View request details</a>
-            </div>
-          </div>
+        <div class="col-md-3 col-md-offset-1">
+            <!-- Auto width -->
+            <button class="btn download-btn"><i class="fa fa-download"></i> Download STL</button>
         </div>
-      </div>
     </div>
-
-    <div class="col-md-3 col-md-offset-1">
-      <div class="row text-center border-primary">
-        <div class="card" style="width: 30rem;">
-          <div class="text-left left-buffer">
-            <p>Designed by: <a href="profile_fab.html">$(designer)</a></p>
-            <p>Accepted by: <a href="profile_fab.html">$(doctor)</a></p>
-          </div>
-          <div class="row">
-            <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
-          </div>
-          <div class="row">
-            <div class="card-body">
-              <h5 class="card-title">$(design_title), submitted on $(date)</h5>
-              <p class="card-text">Description of the design request</p>
-              <!-- TODO: show request if there is not an accepted solution -->
-              <a href="design_request.html" class="btn btn-primary">View request details</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="row bottom-buffer">
-    <div class="col-md-3 col-md-offset-1">
-      <div class="row text-center border-primary">
-        <div class="card" style="width: 30rem;">
-          <div class="text-left left-buffer">
-            <p>Designed by: <a href="profile_fab.html">$(designer)</a></p>
-            <p>Accepted by: <a href="profile_fab.html">$(doctor)</a></p>
-          </div>
-          <div class="row">
-            <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
-          </div>
-          <div class="row">
-            <div class="card-body">
-              <h5 class="card-title">$(design_title), submitted on $(date)</h5>
-              <p class="card-text">Description of the design request</p>
-              <!-- TODO: show request if there is not an accepted solution -->
-              <a href="design_request.html" class="btn btn-primary">View request details</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 col-md-offset-1">
-      <div class="row text-center border-primary">
-        <div class="card" style="width: 30rem;">
-          <div class="text-left left-buffer">
-            <p>Designed by: <a href="profile_fab.html">$(designer)</a></p>
-            <p>Accepted by: <a href="profile_fab.html">$(doctor)</a></p>
-          </div>
-          <div class="row">
-            <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
-          </div>
-          <div class="row">
-            <div class="card-body">
-              <h5 class="card-title">$(design_title), submitted on $(date)</h5>
-              <p class="card-text">Description of the design request</p>
-              <!-- TODO: show request if there is not an accepted solution -->
-              <a href="design_request.html" class="btn btn-primary">View request details</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3 col-md-offset-1">
-      <div class="row text-center border-primary">
-        <div class="card" style="width: 30rem;">
-          <div class="text-left left-buffer">
-            <p>Designed by: <a href="profile_fab.html">$(designer)</a></p>
-            <p>Accepted by: <a href="profile_fab.html">$(doctor)</a></p>
-          </div>
-          <div class="row">
-            <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
-          </div>
-          <div class="row">
-            <div class="card-body">
-              <h5 class="card-title">$(design_title), submitted on $(date)</h5>
-              <p class="card-text">Description of the design request</p>
-              <!-- TODO: show request if there is not an accepted solution -->
-              <a href="design_request.html" class="btn btn-primary">View request details</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
 </div>
 
-
-
-<!-- 
 <div class="container">
-  <row class="text-left">
-    <h2>Cool STL</h2>
-    <h5>Cool Guy | Madagascar</h5>
-    <h5>Submitted on: March 28, 2020</h5>
-    <h3>Verified by: </h3>
-    <h5>Doctor Who | Mysterious Hospital</h5>
-
-    <div class="col-sm-4">
-      <button onclick="location.href = '#';" type="button" class="mt-auto btn btn-block btn-primary">Download</button>
+    <!-- start lightbox -->
+    <div class="row">
+      <div class="column">
+        <img src="../imgs/demomain.png" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+      </div>
+      <div class="column">
+        <img src="../imgs/demo1.png" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
+      </div>
+      <div class="column">
+        <img src="../imgs/demo2.png" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+      </div>
+      <div class="column">
+        <img src="../imgs/demo3.png" style="width:100%" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+      </div>
     </div>
-  </row>
-</div> --> <!--container end.//-->
-<!-- 
-<div id="target" class="madeleine"></div>
 
-<script>
-window.onload = function(){
-    var madeleine = new Madeleine({
-      target: 'target', // target div id
-      data: '../imgs/calicat.stl', // data path
-      path: '../Madeleine.js/script' // path to source directory from current html file
-    });
-}; 
-</script> -->
+    <div id="myModal" class="modal">
+      <span class="close cursor" onclick="closeModal()">&times;</span>
+      <div class="modal-content">
 
+        <div class="mySlides">
+          <div class="numbertext">1 / 4</div>
+          <img src="../imgs/demomain.png" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">2 / 4</div>
+          <img src="../imgs/demo1.png" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">3 / 4</div>
+          <img src="../imgs/demo2.png" style="width:100%">
+        </div>
+        
+        <div class="mySlides">
+          <div class="numbertext">4 / 4</div>
+          <img src="../imgs/demo3.png" style="width:100%">
+        </div>
+        
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <div class="caption-container">
+          <p id="caption"></p>
+        </div>
+
+
+        <div class="column">
+          <img class="demo cursor" src="../imgs/demomain.png" style="width:100%" onclick="currentSlide(1)" alt="Isometric view">
+        </div>
+        <div class="column">
+          <img class="demo cursor" src="../imgs/demo1.png" style="width:100%" onclick="currentSlide(2)" alt="Top view">
+        </div>
+        <div class="column">
+          <img class="demo cursor" src="../imgs/demo2.png" style="width:100%" onclick="currentSlide(3)" alt="Side view">
+        </div>
+        <div class="column">
+          <img class="demo cursor" src="../imgs/demo3.png" style="width:100%" onclick="currentSlide(4)" alt="Supplementary view">
+        </div>
+      </div>
+    </div> <!-- end lightbox -->
+</div>
 
 </body>
