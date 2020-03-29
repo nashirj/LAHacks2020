@@ -1,0 +1,153 @@
+{% extends "base_layout.jinja2" %}
+
+{% block content %}
+<div class="container emp-profile">
+      <div class="row">
+          <div class="col-md-4">
+              <div class="profile-img">
+                  <img src="../imgs/stock2.jpg" style="border-radius: 100px;">
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="profile-head">
+                          <h1>
+                              $(fname) $(lname)
+                          </h1>
+                          <h3>
+                              Fabricator
+                          </h3>
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                    </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-4">
+              <div class="row">
+                <h1>Bio</h1>
+              </div>
+              <div class="row bio">
+                <h5>Insert bio here</h5>
+              </div>
+          </div>
+          <div class="col-md-8">
+
+
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>User Id</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(username)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Email</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(email)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Country</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(country)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>State or province</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(state)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>City</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(city)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Fabrication capabilities</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(fab_capabilities)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Expected average quality of final products</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(expected_quality)</p>
+                                  </div>
+                              </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                              <div class="row text-center border-primary">
+                                <div class="col-md-8">
+                                  <div class="card" style="width: 18rem;">
+                                    <div class="row">
+                                      <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design">
+                                    </div>
+                                    <div class="row">
+                                      <div class="card-body">
+                                        <h5 class="card-title">Design $(i), $(date)</h5>
+                                        <p class="card-text">Description of the design</p>
+                                        <!-- <a href="design_repo_page.html" class="btn btn-primary">View design details</a> -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row text-center border-primary">
+                                <div class="col-md-8">
+                                  <div class="card" style="width: 18rem;">
+                                    <div class="row">
+                                      <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
+                                    </div>
+                                    <div class="row">
+                                      <div class="card-body">
+                                        <h5 class="card-title">Print job $(i), $(date)</h5>
+                                        <p class="card-text">Description of the print job</p>
+                                        <!-- <a href="print.html" class="btn btn-primary">View print job details</a> -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                </div>
+              </div>
+              <div class="tab-content profile-tab" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                  </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                      <div class="row">
+                          <div class="col-md-12">
+                              <label>Your Bio</label><br/>
+                              <p>Your detail description</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+</div>
+{% endblock %}
