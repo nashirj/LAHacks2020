@@ -7,12 +7,6 @@ import backend.db_models as m
 from backend.db_models import DBSession
 from backend.util import verify_user_token, get_user_geoloc
 
-
-@view_config(route_name='home', renderer='templates/mytemplate.jinja2')
-def my_view(req: Request):
-    return {'project': 'backend'}
-
-
 @view_config(route_name='login')
 def login_view(req: Request):
     if req.method != 'POST':
@@ -34,7 +28,7 @@ def login_view(req: Request):
         return HTTPFound("/?login_failed=1")
 
 
-@view_config(route_name='browse_prints', renderer='templates/browse_prints.jinja2')
+@view_config(route_name='browse_prints', renderer='templates/browse/browse_prints.jinja2')
 def browse_prints_view(req: Request):
     is_logged_in = verify_user_token(req)
 
@@ -75,7 +69,7 @@ def browse_prints_view(req: Request):
             'prints_display': prints}
 
 
-@view_config(route_name='browse_designs', renderer='templates/browse_designs.jinja2')
+@view_config(route_name='browse_designs', renderer='templates/browse/browse_designs.jinja2')
 def browse_designs_view(req: Request):
     is_logged_in = verify_user_token(req)
 
@@ -165,7 +159,7 @@ def register_fab(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='view_print', renderer='templates/view_print.jinja2')
+@view_config(route_name='view_print', renderer='templates/view/view_print.jinja2')
 def view_print(req: Request):
     is_logged_in = verify_user_token(req)
     is_doctor = False
