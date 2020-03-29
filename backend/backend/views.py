@@ -81,11 +81,34 @@ def profile_view(req: Request):
         is_fab = False
         query_user: m.DoctorUser = dbs.query(m.DoctorUser).filter_by(username=query_uname).first()
         renderer = "templates/doctor_profile.jinja2"
+        print_reqs = []
+        design_reqs = []
 
+        for design in query_user.design_posts:
+            design_reqs.append({
+                'title': design.title,
+                'desc': design.body,
+                'image': design.get_files()[0],
+                'uid': design.post_id,
+                'date': design.date_created
+            })
+        for prnt in query_user.print_posts:
+            print_reqs.append({
+                'title': prnt.title,
+                'desc': prnt.body,
+                'image': prnt.get_files()[0],
+                'uid': prnt.post_id,
+                'date': prnt.date_created
+            })
+
+        print(print_reqs)
+        print(design_reqs)
         query_data.update({
             'hospital': query_user.hospital,
             'alma_mater': query_user.alma_mater,
             'specialization': query_user.specialization,
+            'design_reqs': design_reqs,
+            'pront': print_reqs
         })
     else:
         query_user: m.FabUser = dbs.query(m.FabUser).filter_by(username=query_uname).first()
