@@ -25,32 +25,34 @@
             {% if is_logged_in %}
                 <h2><a href="/user/{{ user_name }}">My profile</a></h2>
             {% else %}
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-5 text-left">
-                                <label>Email</label>
+                <form>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5 text-left">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-sm-3 text-left">
+                                    <label>Password</label>
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <a class="float-right text-right" href="#">Forgot password?</a>
+                                </div>
                             </div>
-                            <div class="col-sm-3 text-left">
-                                <label>Password</label>
+                            <div class="row">
+                                <div class="col-sm-5 text-left">
+                                    <input name="" class="form-control" placeholder="user@domain.com" type="email">
+                                </div>
+                                <div class="col-sm-4 text-left">
+                                    <input name="" class="form-control" placeholder="******" type="password">
+                                </div>
+                                <div class="col-sm-3 text-right">
+                                    <button type="button" class="mt-auto btn btn-block btn-primary">Log in</button>
+                                </div>
                             </div>
-                            <div class="col-sm-4 text-right">
-                                <a class="float-right text-right" href="#">Forgot password?</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-5 text-left">
-                                <input name="" class="form-control" placeholder="user@domain.com" type="email">
-                            </div>
-                            <div class="col-sm-4 text-left">
-                                <input name="" class="form-control" placeholder="******" type="password">
-                            </div>
-                            <div class="col-sm-3 text-right">
-                                <button type="button" class="mt-auto btn btn-block btn-primary">Log in</button>
-                            </div>
-                        </div>
-                    </div> <!-- row.// -->
-                </div>
+                        </div> <!-- row.// -->
+                    </div>
+                </form>
             {% endif %}
         </div>
     </div>
