@@ -11,27 +11,55 @@
 </head>
 <body>
 
+
+<!-- TODO: figure out how to add header padding -->
+<div class="container">
+  <div class="row row-bordered">
+    <div class="col-sm-6">
+      <h2><a>$(TITLE)</a></h2>
+    </div>
+    <div class="col-sm-6 text-right">
+      <!-- this directs back to user profile -->
+      <h2><a href="generic_profile.html">My profile</a></h2>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="sidenav">
+    <a href="index.html">About</a>
+    <!-- <a href="register.html">Register</a> -->
+    <a href="print_requests_timeline.html">Printing</a>
+    <a href="design_requests_timeline.html">Designing</a>
+  </div>
+</div>
+
 <div class="container top-buffer">
   <div class ="row text-center">
       <h2>Design Request</h2>
-      <h5><a href="profile_doctor.html">Doctor Who</a> | Mysterious Hospital</h5>
-      <h5>Created: March 28, 2020</h5>
-      <h5>Needed by: March 30, 2020</h5>
+      <h5><a href="profile_doctor.html">John Doe</a> | St. John's</h5>
+      <h5>Created: March 29, 2020</h5>
+      <h5>Needed by: April 1, 2020</h5>
 
       <div class="container">
         <h3>Description:</h3>
-        <p>Chinchilla please</p>
+        <p>need a 3d printed valve to interface with a ventilator</p>
       </div>
 
       <div class="container">
-        <h3>Measurements: </h3>
-        <h5>Foot Length: 3cm</h5>
-        <h5>Foot Height: 2cm</h5>
+        <h3>Interface with existing equipment? </h3>
+        <h5>Yes</h5>
+        <h5>ventilator</h5>
+      </div>
+
+      <div class="container">
+        <h3>Images: </h3>
+        <img src="../imgs/valve.jpg" alt="Thing" width="30%"/>
       </div>
 
       <div class="container bottom-buffer">
-        <h3>Images: </h3>
-        <img src="../imgs/valve.jpg" alt="Thing" width="30%"/>
+        <h3>Keywords: </h3>
+        <h5>low-cost, life-saving</h5>
       </div>
 
       <div class="row justify-content-md-center">
@@ -53,7 +81,7 @@
     <div class="card">
         <div class="row text-center">
           <div class="card-body text-dark">
-            <h3 class="card-title"><a href="profile_fab.html">Bob Bob</a></h3>
+            <h3 class="card-title"><a href="profile_fab.html">Tom Bombadil</a></h3>
             <h5>Design title: $(title)</h5>
             <h5>Los Angeles</h5>
             <h5>Started on: March 28, 2020</h5>
@@ -81,7 +109,7 @@
     <div class="card">
         <div class="row text-center">
           <div class="card-body text-dark">
-            <h3 class="card-title"><a href="profile_fab.html">Billy Willy</a></h3>
+            <h3 class="card-title"><a href="profile_fab.html">Cortana Jones</a></h3>
             <h5>Design title: $(title)</h5>
             <h5>Beverly Hills</h5>
             <h5>Started on: March 29, 2020</h5>

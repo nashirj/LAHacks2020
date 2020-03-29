@@ -11,7 +11,27 @@
 </head>
 <body>
 
+  <!-- TODO: figure out how to add header padding -->
+<div class="container">
+  <div class="row row-bordered">
+    <div class="col-sm-6">
+      <h2><a>Med3D</a></h2>
+    </div>
+    <div class="col-sm-6 text-right">
+      <!-- this directs back to user profile -->
+      <h2><a href="generic_profile.html">My profile</a></h2>
+    </div>
+  </div>
+</div>
 
+<div class="container">
+  <div class="sidenav">
+    <a href="index.html">About</a>
+    <!-- <a href="register.html">Register</a> -->
+    <a href="print_requests_timeline.html">Printing</a>
+    <a href="design_requests_timeline.html">Designing</a>
+  </div>
+</div>
 
 <div class="container top-buffer">
   <div class="row text-center">
@@ -30,7 +50,6 @@
         <form>
           <div class="form-group">
             <div class="row">
-              
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="exampleInputFile">STL upload</label>
@@ -50,7 +69,8 @@
           <div class="form-group">
             <div class="row text-center">
               <div class="col-md-12">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                <input class="btn btn-primary" onclick="window.location.href = 'about.html';" type="submit" value="Submit request" />
               </div>
             </div>
           </div>
