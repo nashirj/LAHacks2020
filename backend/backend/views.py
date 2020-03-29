@@ -440,7 +440,7 @@ def submit_print(req: Request):
     post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
     num_parts = data.get('num_items')
-    date_completed = datetime.fromisoformat(data.get('completion-date'))
+    date_completed = datetime.datetime.strptime(data.get('completion-date'), '%Y-%m-%d')
 
     if num_parts and date_completed:
         new_print_submission = m.PrintCommitment("", num_parts, date_completed, req.session['uname'], post)
@@ -503,23 +503,23 @@ def create_print_request_post(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname'))
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname')).first()
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
     data = req.POST
     title = data.get('title')
-    body = data.get('print-notes')
-    num_parts = data.get('num_parts')
-    date_needed = data.get('completion-date')
+    # body = data.get('print-notes')
+    num_parts = data.get('num-items')
+    date_needed = datetime.datetime.strptime(data.get('completion-date'), '%Y-%m-%d')
     files_list = data.getall('files')
 
     file_path_list = []
     if files_list:
         file_path_list = store_file_view(files_list)
 
-    if title and body and file_path_list and num_parts and date_needed:
-        new_print_request = m.PrintPost(title, body, file_path_list, user, date_needed, num_parts)
+    if title and num_parts and date_needed:
+        new_print_request = m.PrintPost(title, "", file_path_list, user, date_needed, num_parts)
 
         DBSession.add(new_print_request)
         transaction.manager.commit()

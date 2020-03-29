@@ -1,6 +1,9 @@
 from pyramid.request import Request
 from backend.db_models import DBSession, AbstractUser
 
+import os
+import uuid
+
 
 def verify_user_token(req: Request):
     if req.session.get('uname') is None:
@@ -32,11 +35,11 @@ def store_file_view(files_list):
     for input in files_list:
         filename = input.filename
         input_file = input.file
-        file_path = os.path.join('/store_file_view/', '%s.stl' % uuid.uuid4())
+        file_path = os.path.join('user_files', '%s.stl' % uuid.uuid4())
         temp_file_path = file_path + '~'
 
         input_file.seek(0)
-        with open(temp_file_path, 'wb') as output_file:
+        with open(temp_file_path, 'w+') as output_file:
             shutil.copyfileobj(input_file, output_file)
 
         os.rename(temp_file_path, file_path)
