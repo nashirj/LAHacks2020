@@ -189,8 +189,15 @@ def view_print(req: Request):
         if user.username == post.doctor_uname:
             is_post_owner = True
 
+    num_parts_in_progress = 0
+    num_parts_completed = 0
     commitments = []
     for resp in post.commitments:
+        if resp.is_verified_print:
+            num_parts_completed += resp.num_copies
+        else:
+            num_parts_in_progress += resp.num_copies
+
         commitments.append({
             'author': resp.author_uname,
             'num_copies': resp.num_copies,
@@ -198,9 +205,16 @@ def view_print(req: Request):
             'files': resp.get_files()
         })
 
+    part_num_info = {
+        'needed': post.num_parts_needed,
+        'completed': num_parts_completed,
+        'in_progress': num_parts_in_progress,
+        'not_started': (post.num_parts_needed - num_parts_in_progress - num_parts_completed)
+    }
+
     return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'view_print',
-            'hospital': post.author.hospital, 'post': post_info, 'commitments': commitments, 'is_doctor': is_doctor,
-            'is_post_owner': is_post_owner}
+            'hospital': post.author.hospital, 'post': post_info, 'commitments': commitments,
+            'is_doctor': is_doctor, 'is_post_owner': is_post_owner, 'part_num_info': part_num_info}
 
 
 @view_config(route_name='view_design', renderer='templates/view_design.jinja2')
@@ -238,6 +252,16 @@ def view_design(req: Request):
         })
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session['uname'], 'page': 'view_print',
-            'hospital': post.author.hospital, 'post': post_info, 'responses': responses, 'is_doctor': is_doctor,
-            'is_post_owner': is_post_owner}
+            'hospital': post.author.hospital, 'post': post_info, 'responses': responses,
+            'is_doctor': is_doctor, 'is_post_owner': is_post_owner}
+
+
+# @view_config(route_name='submit_print')
+# def submit_print(req: Request):
+#     if req.method != 'POST':
+#         return HTTPMethodNotAllowed("This route only valid for POST request")
+#
+#     post = DBSession.query(m.DesignPost).filter_by(req.matchdict['post_id']).first()
+#     data = req.POST
+
 
