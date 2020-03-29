@@ -99,15 +99,15 @@ class DoctorUser(AbstractUser):
     design_posts = relationship("DesignPost", back_populates="author", uselist=True)
     print_posts = relationship("PrintPost", back_populates="author", uselist=True)
 
-    def __init__(self, uname: T.AnyStr, password: T.AnyStr, email: T.AnyStr, fname: T.AnyStr, lname: T.AnyStr, geo_country: T.AnyStr,
-                 geo_state: T.AnyStr, geo_city: T.AnyStr, hospital: T.AnyStr, alma_mater: T.AnyStr,
-                 specialization: T.AnyStr, biography: T.AnyStr):
+    def __init__(self, uname: T.AnyStr, password: T.AnyStr, email: T.AnyStr, fname: T.AnyStr, lname: T.AnyStr,
+                 bio: T.AnyStr, geo_country: T.AnyStr, geo_state: T.AnyStr, geo_city: T.AnyStr, hospital: T.AnyStr,
+                 alma_mater: T.AnyStr, specialization: T.AnyStr, profile_pic: T.AnyStr):
         self.hospital = hospital
         self.alma_mater = alma_mater
         self.specialization = specialization
-        self.biography = biography
 
-        super().__init__(uname, password, email, fname, lname, geo_country, geo_state, geo_city, "doctor")
+        super().__init__(uname, password, email, fname, lname, bio, geo_country, geo_state, geo_city, "doctor",
+                         profile_pic)
 
     __tablename__ = "doctor"
     __mapper_args__ = {
@@ -125,12 +125,13 @@ class FabUser(AbstractUser):
     print_quality_capable = Column(Integer)  # This should be a number out of 10
 
     def __init__(self, uname: T.AnyStr, password: T.AnyStr, email: T.AnyStr, fname: T.AnyStr, lname: T.AnyStr,
-                 geo_country: T.AnyStr, geo_state: T.AnyStr, geo_city: T.AnyStr, printer_model: T.AnyStr,
-                 print_quality_capable: T.AnyStr):
+                 bio: T.AnyStr, geo_country: T.AnyStr, geo_state: T.AnyStr, geo_city: T.AnyStr, printer_model: T.AnyStr,
+                 print_quality_capable: T.AnyStr, profile_pic: T.AnyStr):
         self.printer_model = printer_model
         self.print_quality_capable = print_quality_capable
 
-        super().__init__(uname, password, email, fname, lname, geo_country, geo_state, geo_city, "fabricator")
+        super().__init__(uname, password, email, fname, lname, bio, geo_country, geo_state, geo_city, "fabricator",
+                         profile_pic)
 
     __tablename__ = "fabricator"
     __mapper_args__ = {
