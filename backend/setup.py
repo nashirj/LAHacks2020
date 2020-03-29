@@ -48,5 +48,7 @@ setup(name='backend',
       entry_points="""\
       [paste.app_factory]
       main = backend:main
+      [console_scripts]
+      initialize_db = backend.initialize_db:main
       """,
       )
