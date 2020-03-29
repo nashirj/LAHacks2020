@@ -1,0 +1,29 @@
+{% extends "base_layout.jinja2" %}
+
+{% block content %}
+
+    <!-- TODO: make the signup form not take up full width of page -->
+<div class="container top-buffer">
+  <div class="text-center">
+    <h1>I want to sign up as a</h1>
+    <br>
+  </div>
+  <div class="card">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-2 text-center">
+        <button onclick="location.href = '/register/doctor';" type="button" class="mt-auto btn btn-block btn-primary">Doctor</button>
+      </div>
+      <div class="col-md-4  text-center">
+        <button onclick="location.href = '/register/fabricator';" type="button" class="mt-auto btn btn-block btn-primary">Fabricator</button>
+      </div>
+    </div>
+  </div> <!-- card.// -->
+</div> <!--container end.//-->
+
+<footer class="footer">
+  <div class="container text-center">
+    <span class="text-muted">Note: Users are expressly permitted to have both a doctor and a fabricator profile.</span>
+  </div>
+</footer>
+
+{% endblock %}
