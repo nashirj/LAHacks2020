@@ -39,7 +39,7 @@ def main(argv=sys.argv):
 
         doc = DoctorUser("doccroc", "test", "doc@croc.com", "Doc", "Croc", "I really like reptiles", "USA", "Florida", "Orlando",
                          "Orlando Reptile Hospital", "University of Tampa", "Tail Repairs",
-                         "/static/croc.png")
+                         "/static/imgs/doctor.jpg")
         DBSession.add(doc)
         transaction.manager.commit()
 
