@@ -6,52 +6,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
+  <link href="../css/profile.css" type="text/css" rel="stylesheet"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6 text-justify">
-      <div class="row text-center">
-        <img src="../imgs/stonk.jpeg" class="img-rounded">
-      </div>
-      <h3>About $(TITLE)</h3>
-      <div class="col-sm-12">
-        <h4>$(fname) $(lname)</h4>
-      </div>
-      <h3>Who is $(TITLE) for?</h3>
-      <div class="col-sm-12">
-        <h4>Hospitals/Healthcare Professionals/Consumers</h4>
-        <div class="col-sm-12">
-          <p>Make requests for custom medical equipment.</p>
-        </div>
-        <h4>Fabricators</h4>
-        <div class="col-sm-12">
-          <p>Use your design experience and fabrication tools to design and build life-saving medical equipment.</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-sm-5 col-md-offset-1">
-    <div class="card">
-    <h3 class="text-center">Sign up</h3>
+
+
+<div class="container emp-profile">
       <div class="row">
-        <div class="col-md-6 text-center">
-          <button onclick="location.href = 'register_doc.html';" type="button" class="mt-auto btn btn-block btn-primary">Doctors</button>
-        </div>
-        <div class="col-md-6 text-center">
-          <button onclick="location.href = 'register_fab.html';" type="button" class="mt-auto btn btn-block btn-primary">Fabricators</button>
-        </div>
+          <div class="col-md-4">
+              <div class="profile-img">
+                  <img src="../imgs/stock2.jpg" style="border-radius: 100px;">
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="profile-head">
+                          <h1>
+                              $(fname) $(lname)
+                          </h1>
+                          <h3>
+                              Doctor from $(hospital)
+                          </h3>
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                    </li>
+                  </ul>
+              </div>
+          </div>
       </div>
-    </div> <!-- card.// -->
-    </div> <!-- col.// -->
-  </div>  <!-- row.// -->
-</div> <!--container end.//-->
+      <div class="row">
+          <div class="col-md-4">
+              <div class="row">
+                <h1>Bio</h1>
+              </div>
+              <div class="row bio">
+                <h5>Insert bio here</h5>
+              </div>
+          </div>
+          <div class="col-md-8">
 
 
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="row">
+                                  <div class="col-md-6">
+                                      <label>User Id</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>$(username)</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Name</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>Kshiti Ghelani</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Email</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>kshitighelani@gmail.com</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Phone</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>123 456 7890</p>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <label>Profession</label>
+                                  </div>
+                                  <div class="col-md-6 profile-details">
+                                      <p>Web Developer and Designer</p>
+                                  </div>
+                              </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                              <div class="row text-center border-primary">
+                                <div class="col-md-8">
+                                  <div class="card" style="width: 18rem;">
+                                    <div class="row">
+                                      <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
+                                    </div>
+                                    <div class="row">
+                                      <div class="card-body">
+                                        <h5 class="card-title">Design request $(i), $(date)</h5>
+                                        <p class="card-text">Description of the design request</p>
+                                        <a href="design_request.html" class="btn btn-primary">View request details</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row text-center border-primary">
+                                <div class="col-md-8">
+                                  <div class="card" style="width: 18rem;">
+                                    <div class="row">
+                                      <img class="card-img-top" src="../imgs/stonk.jpeg" alt="design-request">
+                                    </div>
+                                    <div class="row">
+                                      <div class="card-body">
+                                        <h5 class="card-title">Design request $(i), $(date)</h5>
+                                        <p class="card-text">Description of the design request</p>
+                                        <a href="design_request.html" class="btn btn-primary">View request details</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                </div>
+              </div>
+              <div class="tab-content profile-tab" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                              
+                  </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                              
+                      <div class="row">
+                          <div class="col-md-12">
+                              <label>Your Bio</label><br/>
+                              <p>Your detail description</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>        
+</div>
 
+
+<!-- doctors should have list of stuff they've requested -->
+<!-- fabricators should have list of stuff they've made/designed -->
 
 </body>
 </html>
