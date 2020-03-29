@@ -34,7 +34,7 @@ def login_view(req: Request):
     passwd = req.POST['password']
     session = req.session
     dbs = DBSession()
-    user: m.FabUser = dbs.query(m.AbstractUser).filter(username=uname)
+    user: m.AbstractUser = dbs.query(m.AbstractUser).filter_by(username=uname).first()
 
     if user is not None and user.verify_password(passwd):
         new_token = user.refresh_session()
@@ -549,7 +549,6 @@ def create_design_request_post(req: Request):
     user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname'))
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
-
     data = req.POST
     title = data['title']
     body = data['body']
