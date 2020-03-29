@@ -1,4 +1,6 @@
-from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed, HTTPBadRequest, HTTPUnauthorized
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed, HTTPBadRequest, HTTPUnauthorized, \
+    HTTPNotFound
+from pyramid.renderers import render_to_response
 from pyramid.view import view_config
 from pyramid.request import Request
 from sqlalchemy import func
@@ -26,6 +28,56 @@ def login_view(req: Request):
         return HTTPFound(req.params.get('return', '/'))
     else:
         return HTTPFound("/?login_failed=1")
+
+
+@view_config(route_name='view_profile', renderer="")
+def profile_view(req: Request):
+    uname = None
+    is_logged_in = False
+    if verify_user_token(req):
+        uname = req.session['uname']
+        is_logged_in = True
+
+    query_uname = req.matchdict['uname_query']
+    query_user: m.AbstractUser = DBSession.query(m.AbstractUser).filter_by(username=query_uname).first()
+    if query_user is None:
+        return HTTPNotFound("User not found")
+
+    renderer = None
+    query_data = {
+        'uname': query_user.username,
+        'fname': query_user.first_name,
+        'lname': query_user.last_name,
+        'email': query_user.email,
+        'country': query_user.geo_location_cntry,
+        'state': query_user.geo_location_state,
+        'city': query_user.geo_location_city
+    }
+
+    if query_user._user_type == "doctor":
+        query_user: m.DoctorUser = DBSession.query(m.DoctorUser).filter_by(username=query_uname)
+        renderer = "templates/profiles/doc_profile.jinja2"
+
+        query_data.update({
+            'hospital': query_user.hospital,
+            'alma_mater': query_user.alma_mater,
+            'specialization': query_user.specialization
+        })
+    else:
+        query_user: m.FabUser = DBSession.query(m.FabUser).filter_by(username=query_uname)
+        renderer = "templates/profiles/fab_profiles.jinja2"
+
+        query_data.update({
+            'fab_capabilities': query_user.printer_model,
+            'expected_quality': query_user.print_quality_capable
+        })
+
+    render_to_response(renderer, {
+        'is_logged_in': is_logged_in,
+        'user_name': uname,
+        'query_user_data': query_data
+    }, req)
+
 
 
 @view_config(route_name='browse_prints', renderer='templates/browse/browse_prints.jinja2')
