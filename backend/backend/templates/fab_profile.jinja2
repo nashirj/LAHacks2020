@@ -11,8 +11,13 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
+                        {% if query_data['profile_pic'] == None %}
                         <img src="/static/profile/{{ query_data['profile_pic'] }}" style="border-radius: 100px;"
                              alt="Profile Picture">
+                        {% else %}
+                        <img src="/static/imgs/no_pic.jpg}" width="20%" style="border-radius: 100px;"
+                             alt="Profile Picture">
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -156,7 +161,14 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="../imgs/stock2.jpg" style="border-radius: 100px;">
+                        {% if query_data['profile_pic'] == None %}
+                        <img src="/static/profile/{{ query_data['profile_pic'] }}" style="border-radius: 100px;"
+                             alt="Profile Picture">
+                        {% else %}
+                        <!--TODO: fix this-->
+                        <img src="/static/imgs/no_pic.jpg}" width="20%" style="border-radius: 100px;"
+                             alt="Profile Picture">
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-md-8">

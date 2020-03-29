@@ -61,9 +61,13 @@
 <div class="container">
     <div class="sidenav">
         <a href="/">About</a>
-        <a href="/register">Register</a>
-        <a href="/print/browse">Printing</a>
-        <a href="/design/browse">Designing</a>
+        {% if not is_logged_in %}
+            <a href="/register">Register</a>
+        {% endif %}
+        {% if is_logged_in %}
+            <a href="/print/browse">Printing</a>
+            <a href="/design/browse">Designing</a>
+        {% endif %}
     </div>
 </div>
 
@@ -71,7 +75,11 @@
     {% block content %}
         <div class="container top-buffer">
             <div class="row">
+                {% if is_logged_in %}
+                <div class="col-sm-12 text-justify">
+                {% else %}
                 <div class="col-sm-6 text-justify">
+                {% endif %}
                     <h3>About Med3D</h3>
                     <div class="col-sm-12">
                         <h4>Med3D provides a platform for designers and fabricators to make life saving medical
@@ -92,6 +100,7 @@
                     </div>
                 </div>
 
+                {% if not is_logged_in %}
                 <div class="col-sm-5 col-md-offset-1">
                     <div class="card">
                         <h3 class="text-center">Sign up</h3>
@@ -109,6 +118,7 @@
                         </div>
                     </div> <!-- card.// -->
                 </div> <!-- col.// -->
+                {% endif %}
             </div>  <!-- row.// -->
         </div>
     {% endblock content %}
