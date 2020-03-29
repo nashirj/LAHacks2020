@@ -81,6 +81,10 @@ body {
   text-align: center;
 }
 
+.verify-button {
+  margin-right: 15px;
+}
+
 .request-border {
   border-style:  solid;
   border-width: 1px;
