@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, scoped_session, sessionmaker
-from sqlalchemy import Integer, Column, Text, Boolean, ForeignKey, ARRAY, String, PickleType
+from sqlalchemy import Integer, Column, Text, Boolean, ForeignKey, ARRAY, String, PickleType, Date, func
+from zope.sqlalchemy import register
 
 import typing as T
 
@@ -8,7 +9,6 @@ from passlib import hash
 import secrets
 import uuid
 import json
-from zope.sqlalchemy import register
 
 
 DBSession = scoped_session(sessionmaker())
@@ -139,6 +139,8 @@ class DesignPost(Base):
     _files_json = Column(Text)
     files = list()
     has_accepted_response = Column(Boolean)
+    date_created = Column(Date)
+    date_needed = Column(Date)
 
     author_uname = Column(String(75), ForeignKey("doctor.username"))
     author = relationship("DoctorUser", back_populates="design_posts")
@@ -146,7 +148,7 @@ class DesignPost(Base):
 
     __tablename__ = "design_post"
 
-    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: T.List[str], author: AbstractUser):
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: T.List[str], author: AbstractUser, date: Date):
         self.title = title
         self.body = body
         self.author = author
@@ -156,6 +158,9 @@ class DesignPost(Base):
         self.post_id = uuid.uuid4().hex
 
         self.has_accepted_response = False
+
+        self.date_created = func.current_date()
+        self.date_needed = date
 
     def load_files(self):
         self.files = json.loads(self._files_json)['files']
@@ -171,6 +176,7 @@ class DesignResponse(Base):
     _files_json = Column(Text)
     files = list()
     is_accepted_response = Column(Boolean)
+    date_created = Column(Date)
 
     author_uname = Column(String(75), ForeignKey("fabricator.username"))
     author = relationship("FabUser", back_populates="design_responses")
@@ -190,6 +196,8 @@ class DesignResponse(Base):
 
         self.is_accepted_response = False
 
+        self.date_created = func.current_date()
+
         self.resp_id = uuid.uuid4().hex
 
     def load_files(self):
@@ -204,13 +212,16 @@ class PrintPost(Base):
     _files_json = Column(Text)
     files = list()
 
+    date_created = Column(Date)
+    date_needed = Column(Date)
+
     author_uname = Column(String(75), ForeignKey("doctor.username"))
     author = relationship("DoctorUser", back_populates="print_posts")
     commitments = relationship("PrintCommitment", back_populates="parent_post", uselist=True)
 
     __tablename__ = "print_post"
 
-    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: AbstractUser):
+    def __init__(self, title: T.AnyStr, body: T.AnyStr, files: list, author_uname: T.AnyStr, author: AbstractUser, date: Date):
         self.title = title
         self.body = body
         self.author = author
@@ -219,6 +230,9 @@ class PrintPost(Base):
         self._files_json = json.dumps({'files': self.files})
 
         self.post_id = uuid.uuid4().hex
+
+        self.date_created = func.current_date()
+        self.date_needed = date
 
     def load_files(self):
         self.files = json.loads(self._files_json)['files']
@@ -235,6 +249,7 @@ class PrintCommitment(Base):
     est_time_days = Column(Integer)
     is_verified_print = Column(Boolean)
     is_verified_recv = Column(Boolean)
+    date_created = Column(Date)
 
     author_uname = Column(String(75), ForeignKey("fabricator.username"))
     author = relationship("FabUser", back_populates="print_commitments")
@@ -250,6 +265,8 @@ class PrintCommitment(Base):
         self.est_time_days = est_time_days
         self.author = author
         self.parent_post = parent
+
+        self.date_created = func.current_date()
 
         self.resp_id = uuid.uuid4().hex
 
