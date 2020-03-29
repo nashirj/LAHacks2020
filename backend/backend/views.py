@@ -164,7 +164,7 @@ def browse_prints_view(req: Request):
         user_loc_data = get_user_geoloc(req.session['uname'])
         doctors_matching_loc = list(dbs.query(m.DoctorUser).filter_by(geo_location_cntry=user_loc_data['country'],
                                                                             geo_location_state=user_loc_data['state'],
-                                                                            geo_location_city=user_loc_data['city'])).first()
+                                                                            geo_location_city=user_loc_data['city']))
         for doc in doctors_matching_loc:
             for post in doc.print_posts:
                 responses = []
@@ -329,48 +329,52 @@ def view_print(req: Request):
     is_logged_in = verify_user_token(req)
     is_doctor = False
     is_post_owner = False
+    post_info = []
+    commitments = []
+    part_num_info = []
 
     dbs = DBSession()
     post = dbs.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
 
-    post_info = {
-        'title': post.title,
-        'body': post.body,
-        'files': post.get_files(),
-        'date_created': post.date_created,
-        'date_needed': post.date_needed,
-        'author': post.author_uname
-    }
+    if post:
+        post_info = {
+            'title': post.title,
+            'body': post.body,
+            'files': post.get_files(),
+            'date_created': post.date_created,
+            'date_needed': post.date_needed,
+            'author': post.author_uname
+        }
 
-    if is_logged_in:
-        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('uname')).first()
-        if user._user_type == "doctor":
-            is_doctor = True
-        if user.username == post.author_uname:
-            is_post_owner = True
+        if is_logged_in:
+            user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('uname')).first()
+            if user._user_type == "doctor":
+                is_doctor = True
+            if user.username == post.author_uname:
+                is_post_owner = True
 
-    num_parts_in_progress = 0
-    num_parts_completed = 0
-    commitments = []
-    for resp in post.commitments:
-        if resp.is_verified_print:
-            num_parts_completed += resp.num_copies
-        else:
-            num_parts_in_progress += resp.num_copies
+        num_parts_in_progress = 0
+        num_parts_completed = 0
+        commitments = []
+        for resp in post.commitments:
+            if resp.is_verified_print:
+                num_parts_completed += resp.num_copies
+            else:
+                num_parts_in_progress += resp.num_copies
 
-        commitments.append({
-            'author': resp.author_uname,
-            'num_copies': resp.num_copies,
-            'date_created': resp.date_created,
-            'files': resp.get_files()
-        })
+            commitments.append({
+                'author': resp.author_uname,
+                'num_copies': resp.num_copies,
+                'date_created': resp.date_created,
+                'files': resp.get_files()
+            })
 
-    part_num_info = {
-        'needed': post.num_parts_needed,
-        'completed': num_parts_completed,
-        'in_progress': num_parts_in_progress,
-        'not_started': (post.num_parts_needed - num_parts_in_progress - num_parts_completed)
-    }
+        part_num_info = {
+            'needed': post.num_parts_needed,
+            'completed': num_parts_completed,
+            'in_progress': num_parts_in_progress,
+            'not_started': (post.num_parts_needed - num_parts_in_progress - num_parts_completed)
+        }
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'view_print',
             'hospital': post.author.hospital, 'post': post_info, 'commitments': commitments,
@@ -382,33 +386,36 @@ def view_design(req: Request):
     is_logged_in = verify_user_token(req)
     is_doctor = False
     is_post_owner = False
+    post_info = []
+    responses = []
     post = DBSession.query(m.DesignPost).filter_by(post_id=req.matchdict['post_id']).first()
 
-    post_info = {
-        'title': post.title,
-        'body': post.body,
-        'files': post.get_files(),
-        'has_accepted_response': post.has_accepted_response,
-        'date_created': post.date_created,
-        'date_needed': post.date_needed,
-        'author': post.author_uname
-    }
+    if post:
+        post_info = {
+            'title': post.title,
+            'body': post.body,
+            'files': post.get_files(),
+            'has_accepted_response': post.has_accepted_response,
+            'date_created': post.date_created,
+            'date_needed': post.date_needed,
+            'author': post.author_uname
+        }
 
-    if is_logged_in:
-        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('uname')).first()
-        if user._user_type == "doctor":
-            is_doctor = True
-        if user.username == post.doctor_uname:
-            is_post_owner = True
+        if is_logged_in:
+            user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('uname')).first()
+            if user._user_type == "doctor":
+                is_doctor = True
+            if user.username == post.doctor_uname:
+                is_post_owner = True
 
-    responses = []
-    for resp in post.response:
-        responses.append({
-            'author': resp.author_uname,
-            'date_created': resp.date_created,
-            'is_accepted_response': resp.is_accepted_response,
-            'files': resp.get_files()
-        })
+        responses = []
+        for resp in post.response:
+            responses.append({
+                'author': resp.author_uname,
+                'date_created': resp.date_created,
+                'is_accepted_response': resp.is_accepted_response,
+                'files': resp.get_files()
+            })
 
     return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'view_print',
             'hospital': post.author.hospital, 'post': post_info, 'responses': responses,
@@ -484,7 +491,7 @@ def submit_design_response_post(req: Request):
 @view_config(route_name='create_print_request_page', renderer='templates/create_print_request.jinja2')
 def create_print_request_page(req: Request):
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.FabUser).filter_by(username=req.session.get('uname'))
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname')).first()
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -526,7 +533,7 @@ def create_print_request_post(req: Request):
 def create_design_request_page(req: Request):
     is_logged_in = verify_user_token(req)
 
-    user = DBSession.query(m.FabUser).filter_by(username=req.session.get('uname'))
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session.get('uname')).first()
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
