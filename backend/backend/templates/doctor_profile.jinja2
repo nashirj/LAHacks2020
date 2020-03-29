@@ -1,0 +1,309 @@
+{% extends "base_layout.jinja2" %}
+
+{% block head %}
+    <title>Med3D</title>
+    <link href="/static/css/profile.css" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    {% if fab %}
+        <div class="container emp-profile">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img src="/static/profile/{{ query_data['profile_pic'] }}" style="border-radius: 100px;"
+                             alt="Profile Picture">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                        <h1>
+                            {{ query_data['fname'] }} {{ query_data['lname'] }}
+                        </h1>
+                        <h3>
+                            Fabricator
+                        </h3>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                   aria-controls="home" aria-selected="true">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                   aria-controls="profile" aria-selected="false">Timeline</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <h1>Bio</h1>
+                    </div>
+                    <div class="row bio">
+                        <h5>{{ query_data['bio'] }}</h5>
+                    </div>
+                </div>
+                <div class="col-md-8">
+
+
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>User Id</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['username'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['email'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Hospital</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['hospital'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Country</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['country'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>State or province</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['state'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>City</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['city'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Alma Mater</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['alma_mater'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Specialization</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['specialization'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            {% for design in query_data['designs'] %}
+                                <div class="row text-center border-primary">
+                                    <div class="col-md-8">
+                                        <div class="card" style="width: 18rem;">
+                                            <div class="row">
+                                                <img class="card-img-top" src="/static/images/{{ design['image'] }}"
+                                                     alt="design">
+                                            </div>
+                                            <div class="row">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ design['title'] }}, {{ design['date'] }}</h5>
+                                                    <p class="card-text">{{ design['desc'] }}</p>
+                                                    <!-- <a href="design_repo_page.html" class="btn btn-primary">View design details</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% for print in query_data['prints'] %}
+                                <div class="row text-center border-primary">
+                                    <div class="col-md-8">
+                                        <div class="card" style="width: 18rem;">
+                                            <div class="row">
+                                                <img class="card-img-top" src="/static/images/{{ print['image'] }}"
+                                                     alt="print">
+                                            </div>
+                                            <div class="row">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ print['title'] }}, {{ print['date'] }}</h5>
+                                                    <p class="card-text">{{ print['desc'] }}</p>
+                                                    <!-- <a href="print.html" class="btn btn-primary">View print job details</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container emp-profile top-buffer">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img src="../imgs/stock2.jpg" style="border-radius: 100px;">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="profile-head">
+                        <h1>
+                            {{ query_data['fname'] }} {{ query_data['lname'] }}
+                        </h1>
+                        <h3>
+                            Doctor from {{ query_data['hospital'] }}
+                        </h3>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                   aria-controls="home" aria-selected="true">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                   aria-controls="profile" aria-selected="false">Timeline</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <h1>Bio</h1>
+                    </div>
+                    <div class="row bio">
+                        <h5>{{ query_data['bio'] }}</h5>
+                    </div>
+                </div>
+                <div class="col-md-8">
+
+
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade in active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>User Id</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['username'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['email'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Country</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['country'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>State or province</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['state'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>City</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['city'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Alma mater</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['alma_mater'] }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Specialization</label>
+                                </div>
+                                <div class="col-md-6 profile-details">
+                                    <p>{{ query_data['specialization'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row text-center border-primary">
+                                <div class="col-md-12">
+                                    {% for design_req in query_data['design_reqs'] %}
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="row">
+                                            <img class="card-img-top" src="/static/{{ design_req['image'] }}" alt="design-request">
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ design_req['title'] }}, {{ design_req['date'] }}</h5>
+                                                <p class="card-text">{{ design_req['desc'] }}</p>
+                                                <!-- TODO: show request if there is not an accepted solution -->
+                                                <a href="/design/{{ design_req['uid'] }}" class="btn btn-primary">View request
+                                                    details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="row text-center border-primary">
+                                <div class="col-md-12">
+                                    {% for print_req in query_data['pront'] %}
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="row">
+                                            <img class="card-img-top" src="/static/{{ print_req['image'] }}" alt="design-request">
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ print_req['title'] }}, {{ print_req['date'] }}</h5>
+                                                <p class="card-text">{{ print_req['desc'] }}</p>
+                                                <!-- TODO: show request if there is not an accepted solution -->
+                                                <a href="/print/{{ print_req['uid'] }}" class="btn btn-primary">View request
+                                                    details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
