@@ -250,7 +250,7 @@ def view_design(req: Request):
             'is_doctor': is_doctor, 'is_post_owner': is_post_owner}
 
 
-@view_config(route_name='submit_print_page', renderer='templates/submit_print.jinja2')
+@view_config(route_name='submit_print_page', renderer='templates/submit/submit_print.jinja2')
 def submit_print_page(req: Request):
     is_logged_in = verify_user_token(req)
     user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
