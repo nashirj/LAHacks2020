@@ -1,4 +1,4 @@
-{% extends base_layout.jinja2 %}
+{% extends 'base_layout.jinja2' %}
 
 {% block content %}
 <div class="container">
@@ -9,10 +9,10 @@
         <h5>Needed by: {{ post['date_needed'] }} </h5>
 
         <div class="container">
-            <h4>Total Parts Needed: {{ parts_num_info['needed'] }}</h4>
-            <h5>Parts completed: {{ parts_num_info['completed'] }}</h5>
-            <h5>Parts in progress: {{ parts_num_info['in_progress'] }}</h5>
-            <h5>Parts not started: {{ parts_num_info['not_started'] }}</h5>
+            <h4>Total Parts Needed: {{ part_num_info['needed'] }}</h4>
+            <h5>Parts completed: {{ part_num_info['completed'] }}</h5>
+            <h5>Parts in progress: {{ part_num_info['in_progress'] }}</h5>
+            <h5>Parts not started: {{ part_num_info['not_started'] }}</h5>
         </div>
 
         <div class="container">
@@ -40,7 +40,7 @@
         <div class="container card-border">
             <div class="card">
                 <div class="card-body text-dark">
-                    <h3 class="card-title"><a href="#">{{ commitment['author'] }}</a></h3>
+                    <h3 class="card-title"><a href="/user/{{ commitment['author'] }}">{{ commitment['author'] }}</a></h3>
                     <h5>Los Angeles</h5>
                     <h5>Started on: {{ commitment['date_created'] }}</h5>
                     <h5>Parts in progress: {{ commitment['num_copies'] }}</h5>
