@@ -90,3 +90,5 @@ body {
   border-width: 1px;
   border-color: #696969;
 }
+
+.border-primary { border: 1px solid lightgrey; }
