@@ -1,6 +1,7 @@
 {% extends "base_layout.jinja2" %}
 
 {% block content %}
+{% if fab %}
     <div class="container emp-profile">
         <div class="row">
             <div class="col-md-4">
@@ -102,7 +103,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        {% for design in query_user_data['designs'] %}
+                        {% for design in query_data['designs'] %}
                             <div class="row text-center border-primary">
                                 <div class="col-md-8">
                                     <div class="card" style="width: 18rem;">
@@ -121,7 +122,7 @@
                                 </div>
                             </div>
                         {% endfor %}
-                        {% for print in query_user_data['prints'] %}
+                        {% for print in query_data['prints'] %}
                             <div class="row text-center border-primary">
                                 <div class="col-md-8">
                                     <div class="card" style="width: 18rem;">
@@ -144,4 +145,7 @@
             </div>
         </div>
     </div>
+{% else %}
+boobs
+{% endif %}
 {% endblock %}

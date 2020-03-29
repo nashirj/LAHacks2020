@@ -5,6 +5,8 @@ from pyramid.view import view_config
 from pyramid.request import Request
 from sqlalchemy import func
 
+import transaction
+
 import backend.db_models as m
 from backend.db_models import DBSession
 from backend.util import verify_user_token, get_user_geoloc
@@ -16,8 +18,9 @@ import datetime
 def home(req: Request):
     is_logged_in = verify_user_token(req)
     username = None
-    if req.session.get('username'):
-        username = req.session.get('username')
+    print(req.session)
+    if req.session.get('uname'):
+        username = req.session.get('uname')
 
     return {'is_logged_in': is_logged_in, 'user_name': username}
 
@@ -30,20 +33,22 @@ def login_view(req: Request):
     uname = req.POST['username']
     passwd = req.POST['password']
     session = req.session
-    user: m.FabUser = DBSession.query(m.AbstractUser).filter(username=uname)
+    dbs = DBSession()
+    user: m.FabUser = dbs.query(m.AbstractUser).filter(username=uname)
 
     if user is not None and user.verify_password(passwd):
         new_token = user.refresh_session()
 
         session['uname'] = uname
         session['session_token'] = new_token
+        transaction.manager.commit()
 
         return HTTPFound(req.params.get('return', '/'))
     else:
         return HTTPFound("/?login_failed=1")
 
 
-@view_config(route_name='view_profile', renderer="")
+@view_config(route_name='view_profile', renderer="templates/fab_profile.jinja2")
 def profile_view(req: Request):
     uname = None
     is_logged_in = False
@@ -52,9 +57,12 @@ def profile_view(req: Request):
         is_logged_in = True
 
     query_uname = req.matchdict['uname_query']
-    query_user: m.AbstractUser = DBSession.query(m.AbstractUser).filter_by(username=query_uname).first()
+    dbs = DBSession()
+    query_user: m.AbstractUser = dbs.query(m.AbstractUser).filter_by(username=query_uname).first()
+
     if query_user is None:
         return HTTPNotFound("User not found")
+    is_fab = None
 
     renderer = None
     query_data = {
@@ -70,8 +78,9 @@ def profile_view(req: Request):
     }
 
     if query_user._user_type == "doctor":
-        query_user: m.DoctorUser = DBSession.query(m.DoctorUser).filter_by(username=query_uname)
-        renderer = "templates/profiles/doc_profile.jinja2"
+        is_fab = False
+        query_user: m.DoctorUser = dbs.query(m.DoctorUser).filter_by(username=query_uname).first()
+        renderer = "templates/doctor_profile.jinja2"
 
         query_data.update({
             'hospital': query_user.hospital,
@@ -79,8 +88,9 @@ def profile_view(req: Request):
             'specialization': query_user.specialization,
         })
     else:
-        query_user: m.FabUser = DBSession.query(m.FabUser).filter_by(username=query_uname)
-        renderer = "templates/profiles/fab_profiles.jinja2"
+        query_user: m.FabUser = dbs.query(m.FabUser).filter_by(username=query_uname).first()
+        renderer = "templates/fab_profiles.jinja2"
+        is_fab = True
 
         designs = []
         for design in query_user.design_responses:
@@ -92,12 +102,12 @@ def profile_view(req: Request):
             })
 
         prints = []
-        for print in query_user.print_commitments:
+        for printa in query_user.print_commitments:
             prints.append({
-                'title': print.parent_post.title,
-                'date': print.date_created,
-                'desc': print.body,
-                'image': print.get_files()[0]
+                'title': printa.parent_post.title,
+                'date': printa.date_created,
+                'desc': printa.body,
+                'image': printa.get_files()[0]
             })
 
         query_data.update({
@@ -107,23 +117,26 @@ def profile_view(req: Request):
             'prints': prints
         })
 
-    render_to_response(renderer, {
+    print(renderer)
+    return {
         'is_logged_in': is_logged_in,
         'user_name': uname,
-        'query_user_data': query_data
-    }, req)
+        'query_data': query_data,
+        'fab': is_fab
+    }
 
 
 @view_config(route_name='browse_prints', renderer='templates/browse_prints.jinja2')
 def browse_prints_view(req: Request):
+    dbs = DBSession()
     is_logged_in = verify_user_token(req)
 
     prints = []
     if is_logged_in:
         user_loc_data = get_user_geoloc(req.session['uname'])
-        doctors_matching_loc = list(DBSession.query(m.DoctorUser).filter_by(geo_location_cntry=user_loc_data['country'],
+        doctors_matching_loc = list(dbs.query(m.DoctorUser).filter_by(geo_location_cntry=user_loc_data['country'],
                                                                             geo_location_state=user_loc_data['state'],
-                                                                            geo_location_city=user_loc_data['city']))
+                                                                            geo_location_city=user_loc_data['city'])).first()
         for doc in doctors_matching_loc:
             for post in doc.print_posts:
                 responses = []
@@ -138,7 +151,7 @@ def browse_prints_view(req: Request):
                 })
     else:
         # TODO: fix this later, temporary code only displays one doctor's posts if not logged in
-        doc = DBSession.query(m.DoctorUser).first()
+        doc = dbs.query(m.DoctorUser).first()
         posts = doc.print_posts
         for post in posts:
             prints.append({
@@ -160,7 +173,7 @@ def browse_designs_view(req: Request):
     is_logged_in = verify_user_token(req)
 
     designs = []
-    sorted_designs = list(DBSession.query.order_by(m.DesignPost.date_created.desc()))
+    sorted_designs = list(DBSession().query.order_by(m.DesignPost.date_created.desc()))
 
     for design in sorted_designs:
         designs.append({
@@ -180,13 +193,14 @@ def browse_designs_view(req: Request):
 
 @view_config(route_name='register_doctor_post')
 def register_doctor_post(req: Request):
+    dbs = DBSession()
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
     print("are we in boys?")
     data = req.POST
     uname = data.get('uname')
-    passwd = data.get('password')
+    passwd = data.get('passwd')
     email = data.get('email')
     fname = data.get('fname')
     lname = data.get('lname')
@@ -202,11 +216,11 @@ def register_doctor_post(req: Request):
     if uname and passwd and email and fname and lname and country and state and city and hospital and alma_mater \
             and spec and bio:
         new_doctor = m.DoctorUser(uname, passwd, email, fname, lname, country, state, city, hospital, alma_mater,
-                                  spec, bio)
-        DBSession.add(new_doctor)
-        DBSession.commit()
-
+                                  spec, bio, '/static/profile_default.png')
+        dbs.add(new_doctor)
         new_token = new_doctor.refresh_session()
+        transaction.manager.commit()
+
         req.session['uname'] = uname
         req.session['session_token'] = new_token
 
@@ -245,9 +259,9 @@ def register_fab(req: Request):
 
     if uname and passwd and email and fname and lname and country and state and city and printer_model and print_quality:
         new_fab = m.FabUser(uname, passwd, email, fname, lname, country, state, city, printer_model, print_quality)
-
-        DBSession.add(new_fab)
-        DBSession.commit()
+        dbs = DBSession()
+        dbs.add(new_fab)
+        transaction.manager.commit()
 
         new_token = new_fab.refresh_session()
         req.session['uname'] = uname
@@ -264,7 +278,8 @@ def view_print(req: Request):
     is_doctor = False
     is_post_owner = False
 
-    post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
+    dbs = DBSession()
+    post = dbs.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
 
     post_info = {
         'title': post.title,
@@ -276,7 +291,7 @@ def view_print(req: Request):
     }
 
     if is_logged_in:
-        user = DBSession.query(m.AbstractUser).filter_by(username=req.session['uname']).first()
+        user = dbs.query(m.AbstractUser).filter_by(username=req.session['uname']).first()
         if user._user_type == "doctor":
             is_doctor = True
         if user.username == post.doctor_uname:
@@ -315,7 +330,6 @@ def view_design(req: Request):
     is_logged_in = verify_user_token(req)
     is_doctor = False
     is_post_owner = False
-
     post = DBSession.query(m.DesignPost).filter_by(post_id=req.matchdict['post_id']).first()
 
     post_info = {
@@ -352,7 +366,7 @@ def view_design(req: Request):
 @view_config(route_name='submit_print_commitment_page', renderer='templates/submit_print_page.jinja2')
 def submit_print_page(req: Request):
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    user = DBSession.query(m.FabUser).filter_by(username=req.session['uname'])
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -371,9 +385,9 @@ def submit_print(req: Request):
 
     if num_parts and date_completed:
         new_print_submission = m.PrintCommitment("", num_parts, date_completed, req.session['uname'], post)
-
-        DBSession.add(new_print_submission)
-        DBSession.commit()
+        dbs = DBSession()
+        dbs.add(new_print_submission)
+        transaction.manager.commit()
 
         return HTTPFound(req.params.get('return', '/'))
     else:
@@ -383,7 +397,7 @@ def submit_print(req: Request):
 @view_config(route_name='submit_design_response_page', renderer='templates/submit_design_page.jinja2')
 def submit_design_response_page(req: Request):
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    user = DBSession.query(m.FabUser).filter_by(username=req.session['uname'])
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -408,7 +422,7 @@ def submit_design_response_post(req: Request):
         new_design_submission = m.DesignResponse(body, file_path_list, req.session['uname'], post)
 
         DBSession.add(new_design_submission)
-        DBSession.commit()
+        transaction.manager.commit()
 
         return HTTPFound(req.params.get('return', '/'))
     else:
@@ -418,7 +432,7 @@ def submit_design_response_post(req: Request):
 @view_config(route_name='create_print_request_page', renderer='templates/create_print_request.jinja2')
 def create_print_request_page(req: Request):
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    user = DBSession.query(m.FabUser).filter_by(username=req.session['uname'])
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -430,7 +444,7 @@ def create_print_request_post(req: Request):
     if req.method != 'POST':
         return HTTPMethodNotAllowed("This route only valid for POST request")
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.DoctorUser).filter_by(username=req.session['username'])
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session['uname'])
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -449,7 +463,7 @@ def create_print_request_post(req: Request):
         new_print_request = m.PrintPost(title, body, file_path_list, user, date_needed, num_parts)
 
         DBSession.add(new_print_request)
-        DBSession.commit()
+        transaction.manager.commit()
 
         return HTTPFound(req.params.get('return', '/'))
     else:
@@ -459,7 +473,7 @@ def create_print_request_post(req: Request):
 @view_config(route_name='create_design_request_page', renderer='templates/create_design_request.jinja2')
 def create_design_request_page(req: Request):
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    user = DBSession.query(m.FabUser).filter_by(username=req.session['uname'])
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -472,7 +486,7 @@ def create_design_request_post(req: Request):
         return HTTPMethodNotAllowed("This route only valid for POST request")
 
     is_logged_in = verify_user_token(req)
-    user = DBSession.query(m.DoctorUser).filter_by(username=req.session['username'])
+    user = DBSession.query(m.DoctorUser).filter_by(username=req.session['uname'])
     if not is_logged_in or not user:
         return HTTPUnauthorized("You must be logged in to view this page")
 
@@ -489,7 +503,7 @@ def create_design_request_post(req: Request):
         new_design_request = m.DesignPost(title, body, file_path_list, user, datetime.datetime.now())
 
         DBSession.add(new_design_request)
-        DBSession.commit()
+        transaction.manager.commit()
 
         return HTTPFound(req.params.get('return', '/'))
     else:
