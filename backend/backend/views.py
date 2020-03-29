@@ -9,6 +9,8 @@ import backend.db_models as m
 from backend.db_models import DBSession
 from backend.util import verify_user_token, get_user_geoloc
 
+import datetime
+
 @view_config(route_name='login')
 def login_view(req: Request):
     if req.method != 'POST':
@@ -341,7 +343,7 @@ def submit_print(req: Request):
     post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
     num_parts = data.get('num_items')
-    date_completed = StrToDate(data.get('completion-date'))
+    date_completed = datetime.fromisoformat(data.get('completion-date'))
 
     if num_parts and date_completed:
         new_print_submission = m.PrintCommitment("", num_parts, date_completed, req.session['uname'], post)
