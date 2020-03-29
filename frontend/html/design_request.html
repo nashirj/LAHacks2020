@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>$(TITLE)</title>
+  <title>$(TITLE) – Design request</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -12,9 +12,9 @@
 <body>
 
 <div class="container top-buffer">
-  <row class="text-center">
+  <div class ="row text-center">
       <h2>Design Request</h2>
-      <h5>Doctor Who | Mysterious Hospital</h5>
+      <h5><a href="profile_doctor.html">Doctor Who</a> | Mysterious Hospital</h5>
       <h5>Created: March 28, 2020</h5>
       <h5>Needed by: March 30, 2020</h5>
 
@@ -29,55 +29,77 @@
         <h5>Foot Height: 2cm</h5>
       </div>
 
-      <div class="container">
+      <div class="container bottom-buffer">
         <h3>Images: </h3>
-        <img src="#" alt="Thing" width="200" height="80" />
+        <img src="../imgs/valve.jpg" alt="Thing" width="30%"/>
       </div>
 
       <div class="row justify-content-md-center">
         <div class="col-sm-4 col-md-offset-4">
-          <button onclick="location.href = '#';" type="button" class="mt-auto btn btn-block btn-primary">Submit Design</button>
+          <button onclick="location.href = 'submit_design.html';" type="button" class="mt-auto btn btn-block btn-primary">Submit Design</button>
         </div>
       </div>
-
-      <div class="container">
-        <h3>Current/Past Designers:</h3>
-      </div>
-  </row>
+  </div>
 </div> <!--container end.//-->
+
+
+<div class="container">
+  <div class="row text-center">
+    <h3>Current/Past Designers:</h3>
+  </div>
+</div>
+<div class="container">
+  <div class="container card-border">
+    <div class="card">
+        <div class="row text-center">
+          <div class="card-body text-dark">
+            <h3 class="card-title"><a href="profile_fab.html">Bob Bob</a></h3>
+            <h5>Design title: $(title)</h5>
+            <h5>Los Angeles</h5>
+            <h5>Started on: March 28, 2020</h5>
+            <h5>Parts in progress: 10</h5>
+          </div>
+        </div>
+        <div class="row bottom-buffer">
+          <div class="container verified-box top-small-buffer">
+            Verified
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="form-group">
+            <button class="btn btn-primary btn-lg" type="submit">
+              Unverify
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <div class="container card-border">
     <div class="card">
-        <div class="card-body text-dark">
-          <h3 class="card-title"><a href="#">Bob Bob</a></h3>
-          <h5>Los Angeles</h5>
-          <h5>Started on: March 20, 2020</h5>
-          <h5>Parts in progress: 5</h5>
+        <div class="row text-center">
+          <div class="card-body text-dark">
+            <h3 class="card-title"><a href="profile_fab.html">Billy Willy</a></h3>
+            <h5>Design title: $(title)</h5>
+            <h5>Beverly Hills</h5>
+            <h5>Started on: March 29, 2020</h5>
+            <h5>Parts in progress: 5</h5>
+          </div>
         </div>
-    </div>
-
-  <div class="container">
-    <div class="container verified-box">
-        Verified
-    </div>
-
-    <div class="form-group verify-button"> 
-      <button class="btn btn-primary btn-lg pull-right" type="submit"> 
-           Verify  
-      </button> 
-    </div> 
-  </div>
-</div>
-
-  <div class="container card-border">
-    <div class="card">
-        <div class="card-body text-dark">
-        <h3 class="card-title"><a href="print_request.html">Billy</a></h3>
-        <h5>Los Angeles</h5>
-        <h5>Started on: March 20, 2020</h5>
-        <h5>Parts in progress: 5</h5>
-      </div>
+        <div class="row bottom-buffer">
+          <div class="container not-verified-box top-small-buffer">
+            Not verified
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="form-group">
+            <button class="btn btn-primary btn-lg" type="submit">
+              Verify 
+            </button>
+          </div>
+        </div>
     </div>
   </div>
 </div>

@@ -24,7 +24,7 @@
 {#        <h3>Images: </h3>#}
 {#        <img src="#" alt="Thing" width="200" height="80" />#}
 {#      </div>#}
-
+      {% if is_logged_in %}
       {% if not is_doctor %}
           <div class="row justify-content-md-center">
             <div class="col-sm-4 col-md-offset-4">
@@ -32,6 +32,7 @@
             </div>
           </div>
       {% endif %}
+        {% endif %}
 
       <div class="container">
         <h3>Current/Past Designers:</h3>

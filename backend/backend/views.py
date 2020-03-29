@@ -9,7 +9,7 @@ import transaction
 
 import backend.db_models as m
 from backend.db_models import DBSession
-from backend.util import verify_user_token, get_user_geoloc
+from backend.util import verify_user_token, get_user_geoloc, store_file_view
 
 import datetime
 
@@ -153,9 +153,14 @@ def profile_view(req: Request):
 def browse_prints_view(req: Request):
     dbs = DBSession()
     is_logged_in = verify_user_token(req)
+    is_doctor = False
 
     prints = []
     if is_logged_in:
+        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('username')).first()
+        if user._user_type == "doctor":
+            is_doctor = True
+
         user_loc_data = get_user_geoloc(req.session['uname'])
         doctors_matching_loc = list(dbs.query(m.DoctorUser).filter_by(geo_location_cntry=user_loc_data['country'],
                                                                             geo_location_state=user_loc_data['state'],
@@ -187,16 +192,21 @@ def browse_prints_view(req: Request):
                 'date_needed': str(post.date_needed)
             })
 
-    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'browse_prints',
-            'prints_display': prints}
+    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('username'), 'page': 'browse_prints',
+            'prints_display': prints, 'is_doctor': is_doctor}
 
 
 @view_config(route_name='browse_designs', renderer='templates/browse_designs.jinja2')
 def browse_designs_view(req: Request):
     is_logged_in = verify_user_token(req)
+    is_doctor = False
+
+    if is_logged_in:
+        user = DBSession.query(m.AbstractUser).filter_by(username=req.session.get('username')).first()
+        if user._user_type == "doctor":
+            is_doctor = True
 
     designs = []
-
     sorted_designs = list(DBSession.query(m.DesignPost).order_by(m.DesignPost.date_created.desc()))
 
     for design in sorted_designs:
@@ -211,8 +221,17 @@ def browse_designs_view(req: Request):
             'date_needed': str(design.date_need)
         })
 
-    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('uname'), 'page': 'browse_designs',
-            'designs_display': designs}
+    return {'is_logged_in': is_logged_in, 'user_name': req.session.get('username'), 'page': 'browse_designs',
+            'designs_display': designs, 'is_doctor': is_doctor}
+
+
+@view_config(route_name='register_page', renderer='templates/create_profile.jinja2')
+def register_page(req: Request):
+    is_logged_in = verify_user_token(req)
+    if is_logged_in:
+        return HTTPFound("/")
+
+    return {"is_logged_in": is_logged_in, 'user_name': None}
 
 
 @view_config(route_name='register_doctor_post')
