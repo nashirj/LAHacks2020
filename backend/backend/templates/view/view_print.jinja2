@@ -1,3 +1,6 @@
+{% extends base_layout.jinja2 %}
+
+{% block content %}
 <div class="container">
     <row class="text-center">
         <h2>{{ post['title'] }}</h2>
@@ -44,3 +47,4 @@
         </div>
     {% endfor %}
 </div>
+{% endblock content %}

@@ -1,4 +1,4 @@
-from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed, HTTPBadRequest
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden, HTTPMethodNotAllowed, HTTPBadRequest, HTTPUnauthorized
 from pyramid.view import view_config
 from pyramid.request import Request
 from sqlalchemy import func
@@ -6,12 +6,6 @@ from sqlalchemy import func
 import backend.db_models as m
 from backend.db_models import DBSession
 from backend.util import verify_user_token, get_user_geoloc
-
-
-@view_config(route_name='home', renderer='templates/mytemplate.jinja2')
-def my_view(req: Request):
-    return {'project': 'backend'}
-
 
 @view_config(route_name='login')
 def login_view(req: Request):
@@ -34,7 +28,7 @@ def login_view(req: Request):
         return HTTPFound("/?login_failed=1")
 
 
-@view_config(route_name='browse_prints', renderer='templates/browse_prints.jinja2')
+@view_config(route_name='browse_prints', renderer='templates/browse/browse_prints.jinja2')
 def browse_prints_view(req: Request):
     is_logged_in = verify_user_token(req)
 
@@ -75,7 +69,7 @@ def browse_prints_view(req: Request):
             'prints_display': prints}
 
 
-@view_config(route_name='browse_designs', renderer='templates/browse_designs.jinja2')
+@view_config(route_name='browse_designs', renderer='templates/browse/browse_designs.jinja2')
 def browse_designs_view(req: Request):
     is_logged_in = verify_user_token(req)
 
@@ -165,7 +159,7 @@ def register_fab(req: Request):
         return HTTPBadRequest("Malformed request")
 
 
-@view_config(route_name='view_print', renderer='templates/view_print.jinja2')
+@view_config(route_name='view_print', renderer='templates/view/view_print.jinja2')
 def view_print(req: Request):
     is_logged_in = verify_user_token(req)
     is_doctor = False
@@ -256,6 +250,16 @@ def view_design(req: Request):
             'is_doctor': is_doctor, 'is_post_owner': is_post_owner}
 
 
+@view_config(route_name='submit_print_page', renderer='templates/submit/submit_print.jinja2')
+def submit_print_page(req: Request):
+    is_logged_in = verify_user_token(req)
+    user = DBSession.query(m.FabUser).filter_by(username=req.session['username'])
+    if not is_logged_in or not user:
+        return HTTPUnauthorized("You must be logged in to view this page")
+
+    return {'is_logged_in': is_logged_in, 'user_name': user.username}
+
+
 @view_config(route_name='submit_print')
 def submit_print(req: Request):
     if req.method != 'POST':
@@ -263,8 +267,8 @@ def submit_print(req: Request):
 
     post = DBSession.query(m.PrintPost).filter_by(post_id=req.matchdict['post_id']).first()
     data = req.POST
-    num_parts = data.get('num-items')
-    date_completed = data.get('completion-date')
+    num_parts = data.get('num_items')
+    date_completed = StrToDate(data.get('completion-date'))
 
     if num_parts and date_completed:
         new_print_submission = m.PrintCommitment("", num_parts, date_completed, req.session['uname'], post)

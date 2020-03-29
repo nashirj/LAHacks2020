@@ -1,7 +1,10 @@
 .idea/
 backend/backend.egg-info
 backend/venv
+backend/.idea
 
 backend/backend/__pycache__
+
+frontend/Madeleine.js/
 
 .DS_Store

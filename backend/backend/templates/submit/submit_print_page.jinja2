@@ -1,0 +1,39 @@
+{% extends base_layout.jinja %}
+
+{% block content %}
+<div class="container">
+  <div class="row text-center">
+    <h1>Accept a print job</h1>
+  </div>
+  <div class="row">
+    <div class="card">
+      <article class="card-body">
+        <form>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                <label>Number of items to be fabricated</label>
+                <input id="num-items" class="form-control" placeholder="#" type="text" name="num_items"></input>
+              </div>
+
+              <div class="col-md-4">
+                <!-- space separate keywords -->
+                <label>Estimated Date of Completion</label>
+                <input name="completion-date" class="form-control" placeholder="YYYY-MM-DD" type="date">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row text-center">
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </article>
+    </div>
+  </div>
+</div>
+{% endblock content %}
