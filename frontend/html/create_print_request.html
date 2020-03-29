@@ -10,9 +10,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
-
+  
 <div class="container">
   <div class="row text-center">
     <!-- Description
@@ -22,34 +20,46 @@
     Pictures
     Hashtags
     -->
-    <h3>Make a fabrication request</h3>
+    <h3>Make a print request</h3>
   </div>
-  <form action="#blah">
-    <div class="form-group">
-      <div class="row text-left">
-        <label for="comment">Link to design</label>
-        <input id="design" class="form-control" type="text"></textarea>
-      </div>
+  <div class="row">
+    <div class="card">
+      <article class="card-body">
+        <form>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4">
+                <!-- change this to a dynamic thing that lets user select from repo -->
+                <label>Link to design</label>
+                <input id="design" class="form-control" type="text"></input>
+              </div>
+              
+              <div class="col-md-4">
+                <label>Number of items needed</label>
+                <input id="num-items" class="form-control" placeholder="#" type="text"></input>
+              </div>
 
-      <div class="row text-left">
-        <!-- space separate keywords -->
-        <label for="comment">Keywords</label>
-        <input name="" class="form-control" placeholder="urgent, disposable, etc" type="email">
-      </div>
-      <div class="row text-left">
-        <label for="example-date-input">Date needed by</label>
-        <div class="text-center">
-          <input class="form-control" type="date" placeholder="MMMM-DD-YY" id="example-date-input">
-        </div>
-      </div>
-      <br>
-      <div class="row text-left">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
+              <div class="col-md-4">
+                <!-- space separate keywords -->
+                <label>Estimated completion date</label>
+                <input name="completion-date" class="form-control" placeholder="YYYY-MM-DD" type="date">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row text-center">
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </article>
     </div>
-  </form>
   </div>
 </div> <!--container end.//-->
+
 
 
 </body>
